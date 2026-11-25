@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SPI Practice</title>
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIlNQSSBQcmFjdGljZSIsICJzaG9ydF9uYW1lIjogIlNQSSBQcmFjdGljZSIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjRURGMUYzIiwgInRoZW1lX2NvbG9yIjogIiMwRjZFN0EifQ==">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAWfmNhQlgAABZ+anVtYgAAAB5qdW1kYzJwYQARABCAAACqADibcQNjMnBhAAAAFlhqdW1iAAAAR2p1bWRjMm1hABEAEIAAAKoAOJtxA3VybjpjMnBhOjZiMTUwNzg3LWMxNmEtNDNkNi1iNTE3LWIyOTA0NWMxZDU2YgAAAAOTanVtYgAAAClqdW1kYzJhcwARABCAAACqADibcQNjMnBhLmFzc2VydGlvbnMAAAAAuGp1bWIAAABEanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5pbmdyZWRpZW50LnYzAAAAABhjMnNoL9QDltg6iSrOARhgJAc+kgAAAGxjYm9yo2lkYzpmb3JtYXRpaW1hZ2UvcG5namluc3RhbmNlSUR4LHhtcDppaWQ6OWVjMzhmMjAtNWI2Ny00MzA1LWFiOGItMTc3ZDBjYjJhNmE3bHJlbGF0aW9uc2hpcGhwYXJlbnRPZgAAAeJqdW1iAAAAQWp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuYWN0aW9ucy52MgAAAAAYYzJzaJzYKEQ/ERJ8aMkiJnaJKoIAAAGZY2JvcqJnYWN0aW9uc4KiZmFjdGlvbmtjMnBhLm9wZW5lZGpwYXJhbWV0ZXJzoWtpbmdyZWRpZW50c4GiY3VybHgtc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5pbmdyZWRpZW50LnYzZGhhc2hYIBkJFK8zFq2UPgxYfXFSbrUruJncWJ2nUc6zvIxTr9ZqpGZhY3Rpb254HWNvbS5hbnRocm9waWMuY2xhdWRlLnByb3ZpZGVkanBhcmFtZXRlcnOheB9jb20uYW50aHJvcGljLm9yaWdpbi1jb25maWRlbmNlZ3Vua25vd25rZGVzY3JpcHRpb254ZkNsYXVkZSBwcm92aWRlZCB0aGlzIGZpbGUgYXQgdGhlIHJlcXVlc3Qgb2YgYSB1c2VyIGFuZCBtYXkgaGF2ZSBjcmVhdGVkIG9yIG1vZGlmaWVkIHRoZSBmaWxlIGNvbnRlbnRzLm1zb2Z0d2FyZUFnZW50oWRuYW1lZkNsYXVkZXJhbGxBY3Rpb25zSW5jbHVkZWT1AAAAyGp1bWIAAABAanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5oYXNoLmRhdGEAAAAAGGMyc2iaWb2fd2HNI+iepb7rUcvVAAAAgGNib3KlY2FsZ2ZzaGEyNTZjcGFkTQAAAAAAAAAAAAAAAABkaGFzaFggIEA8y2zt0v7inLtK3532b3744Db7xrNepM6K4Eok2NRkbmFtZW5qdW1iZiBtYW5pZmVzdGpleGNsdXNpb25zgaJlc3RhcnQYIWZsZW5ndGgZFooAAAI+anVtYgAAACdqdW1kYzJjbAARABCAAACqADibcQNjMnBhLmNsYWltLnYyAAAAAg9jYm9ypWNhbGdmc2hhMjU2aXNpZ25hdHVyZXhNc2VsZiNqdW1iZj0vYzJwYS91cm46YzJwYTo2YjE1MDc4Ny1jMTZhLTQzZDYtYjUxNy1iMjkwNDVjMWQ1NmIvYzJwYS5zaWduYXR1cmVqaW5zdGFuY2VJRHgseG1wOmlpZDo1NGQ0ZWFhNi03YTNkLTQ2Y2QtODRiOS0zMWQ5MTkzNjEyMGVyY3JlYXRlZF9hc3NlcnRpb25zg6JjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggGQkUrzMWrZQ+DFh9cVJutSu4mdxYnadRzrO8jFOv1mqiY3VybHgqc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5hY3Rpb25zLnYyZGhhc2hYIGngdv/qy4rS4VuXAyUxGiUwzK8mwd3HKi39bqU4TmdQomN1cmx4KXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaGFzaC5kYXRhZGhhc2hYILOnprrtTuLW8IbsejKa7S1wuYrCpaGnR50Y+6UCu6vgdGNsYWltX2dlbmVyYXRvcl9pbmZvo2RuYW1lb0FudGhyb3BpYyBGaWxlc2d2ZXJzaW9uZTEuMC4wa3NwZWNWZXJzaW9uZTIuNC4wAAAQOGp1bWIAAAAoanVtZGMyY3MAEQAQgAAAqgA4m3EDYzJwYS5zaWduYXR1cmUAAAAQCGNib3LShFkCEqIBJhghWQIKMIICBjCCAY2gAwIBAgIUQOWgCu7COdC+uIP6BkIFPWdVEwAwCgYIKoZIzj0EAwMwSTEXMBUGA1UEChMOQW50aHJvcGljLCBQQkMxLjAsBgNVBAMTJUFudGhyb3BpYyBDb250ZW50IENyZWRlbnRpYWxzIFJvb3QgQ0EwHhcNMjYwODA3MTg0MzU2WhcNMjgwODA2MTk0MzU2WjBEMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEpMCcGA1UEAxMgQW50aHJvcGljIENsYXVkZSBDb250ZW50IFNpZ25pbmcwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASYegpry1AYBRTVNL1CpTlbROnY3dey+UrsF9C3phYrATN3ZHf93Mo8RQN0KOUuOn19P4oWNFWe5n2/She9N7eTo1gwVjAOBgNVHQ8BAf8EBAMCB4AwFQYDVR0lBA4wDAYKKwYBBAGD6F4CATAMBgNVHRMBAf8EAjAAMB8GA1UdIwQYMBaAFM5R4gSBTmRbI/jjxM+aPpzB11zCMAoGCCqGSM49BAMDA2cAMGQCMDFzHRSeAXrSy1WOzkbhPZ6Km2wGTmZ/2gK18k8BQGXyqz88Rdrz6CTX9flAnYNVxgIwcF9c3fVhqmJKpi+UhasNUMko69cyX6STPfta3Q8EjyzDjzoyrol46FP6VFHhvUcJoWNwYWRZDZ4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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">
+<meta name="theme-color" content="#0F6E7A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="SPI Practice">
+<style>
+:root{--bg:#EDF1F3;--card:#fff;--ink:#14212B;--mute:#5B6B76;--line:#CBD5DB;--accent:#0F6E7A;--ok:#1E7B4F;--okbg:#DDF0E5;--bad:#B3392F;--badbg:#F7DEDA;--flag:#B7791F;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0D1418;--card:#151F25;--ink:#E6EDF0;--mute:#93A4AE;--line:#2A3A43;--accent:#4FB6C4;--ok:#5BC48C;--okbg:#14301F;--bad:#F0877D;--badbg:#3A1B18;--flag:#E0A94A;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0D1418;--card:#151F25;--ink:#E6EDF0;--mute:#93A4AE;--line:#2A3A43;--accent:#4FB6C4;--ok:#5BC48C;--okbg:#14301F;--bad:#F0877D;--badbg:#3A1B18;--flag:#E0A94A;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:680px;margin:0 auto;padding:16px}
+header{display:flex;align-items:center;gap:10px;color:var(--accent);margin-bottom:12px}
+header h1{margin:0;font-size:20px;color:var(--ink)}
+nav{display:flex;gap:8px;margin-bottom:16px}
+button{font:inherit;color:inherit;cursor:pointer}
+nav button,.seg button{flex:1;padding:10px;border:1px solid var(--line);background:var(--card);border-radius:8px}
+nav button.on,.seg button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px}
+h2{font-size:17px;margin:0 0 8px}
+.seg{display:flex;gap:8px;margin:8px 0 14px}
+select{width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;margin:6px 0 14px}
+.primary{width:100%;padding:13px;border:0;border-radius:8px;background:var(--accent);color:#fff;font-weight:600;margin-top:6px}
+.primary:disabled{opacity:.45;cursor:not-allowed}
+.ghost{padding:10px 14px;border:1px solid var(--line);background:transparent;border-radius:8px}
+.mute{color:var(--mute);font-size:14px}
+.bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent)}
+.stem{font:19px/1.55 Georgia,"Times New Roman",serif;margin:12px 0 16px;max-width:60ch}
+.opt{display:flex;gap:12px;width:100%;text-align:left;padding:12px;margin-bottom:8px;border:1px solid var(--line);background:var(--card);border-radius:8px}
+.opt b{min-width:22px}
+.opt.sel{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.opt.ok{background:var(--okbg);border-color:var(--ok)}
+.opt.bad{background:var(--badbg);border-color:var(--bad)}
+.exp{padding:12px;border-radius:8px;margin:12px 0;border-left:4px solid}
+.exp.good{background:var(--okbg);border-color:var(--ok)}
+.exp.miss{background:var(--badbg);border-color:var(--bad)}
+.row{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:10px}
+.big{font-size:44px;font-weight:700;line-height:1.1}
+.trow{margin-bottom:12px}
+.trow div:first-child{display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px}
+details{border-top:1px solid var(--line);padding:10px 0}
+summary{cursor:pointer}
+.flag{color:var(--flag)}
+.dg{width:100%;max-width:440px;height:auto;display:block;margin:10px 0}
+.dg text{font:12.5px -apple-system,"Segoe UI",Roboto,sans-serif;fill:var(--ink)}
+.dg text.m{fill:var(--mute)}
+.dg .l{stroke:var(--ink);fill:none;stroke-width:1.5}
+.dg .b{stroke:var(--ink);fill:none;stroke-width:3}
+.dg .a{stroke:var(--accent);fill:none;stroke-width:2}
+.dg .r{stroke:var(--bad);fill:none;stroke-width:2}
+.dg .g{stroke:var(--mute);fill:none;stroke-width:1.5;stroke-dasharray:4 3}
+.dg .f{fill:var(--accent);fill-opacity:.3}
+.dg .fa{fill:var(--accent);fill-opacity:.3;stroke:var(--accent);stroke-width:1.5}
+.dg .ma{fill:var(--accent);fill-opacity:.65;stroke:var(--accent)}
+.dg .t{fill:var(--line);fill-opacity:.7}
+.dg .w{fill:var(--card);stroke:var(--ink);stroke-width:1.5}
+.dg .br{fill:var(--accent);fill-opacity:.5}
+.dg .st{fill:var(--ink)}
+.dg .k{fill:var(--ink);fill-opacity:.55}
+.sync{border:1px solid var(--line);border-left-width:4px;border-radius:8px;padding:10px 12px;margin-bottom:14px;background:var(--card);font-size:14px}
+.sync.ok{border-left-color:var(--ok)}
+.sync.warn{border-left-color:var(--flag)}
+.sync.wait{border-left-color:var(--mute)}
+.sync .ghost{margin-top:8px}
+textarea{width:100%;margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:13px/1.4 ui-monospace,Menlo,monospace}
+</style>
+</head>
+<body>
+<main>
+<header>
+<svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><path d="M17 3 L3 28 A28.6 28.6 0 0 0 31 28 Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M17 3 L10 30 M17 3 L24 30" stroke="currentColor" opacity=".4" fill="none"/></svg>
+<h1>SPI Practice</h1>
+</header>
+<div id="app"></div>
+</main>
+<script>
+// Question bank and diagrams. Add new questions at the end of the Q list.
+var Q=[
+["Waves","What is the period of a 5 MHz ultrasound wave?",["0.2 µs","0.5 µs","2 µs","5 µs"],0,"Period is the inverse of frequency: 1 ÷ 5,000,000 Hz = 0.2 µs."],
+["Waves","What is the average speed of sound in soft tissue?",["330 m/s","1,540 m/s","3,500 m/s","4,080 m/s"],1,"The assumed average for soft tissue is 1,540 m/s. Scanners use this value to place echoes at the correct depth."],
+["Waves","A pulse takes 39 µs to travel to a reflector and back. How deep is the reflector?",["1.5 cm","3 cm","6 cm","9 cm"],1,"The 13 µs rule: every 13 µs of round-trip time equals 1 cm of depth. 39 ÷ 13 = 3 cm."],
+["Transducers","Increasing the transducer frequency will most likely:",["Improve penetration and worsen axial resolution","Worsen penetration and improve axial resolution","Improve both penetration and axial resolution","Worsen both penetration and axial resolution"],1,"Higher frequency gives shorter wavelengths and pulses, so axial resolution improves. Attenuation rises with frequency, so penetration falls."],
+["Resolution","Which change improves axial resolution?",["Longer spatial pulse length","Lower frequency","Wider beam","Shorter spatial pulse length"],3,"Axial resolution equals half the spatial pulse length. A shorter pulse, from more damping or higher frequency, gives better axial resolution."],
+["Physics","What determines the percentage of sound reflected at a boundary at normal incidence?",["Difference in acoustic impedance","Difference in frequency","Pulse repetition frequency","Transducer diameter"],0,"Reflection depends on the impedance mismatch between the two media. Impedance equals density times propagation speed. A bigger mismatch means a stronger echo."],
+["Physics","Refraction requires which two conditions?",["Normal incidence and equal speeds","Normal incidence and different speeds","Oblique incidence and different speeds","Oblique incidence and equal speeds"],2,"Refraction needs an oblique angle and a change in propagation speed between media, as described by Snell’s law."],
+["Attenuation","Soft tissue attenuates about 0.5 dB per cm per MHz. What is the total attenuation for 4 MHz sound traveling to a reflector 5 cm deep and back?",["5 dB","10 dB","20 dB","40 dB"],2,"Coefficient = 0.5 × 4 = 2 dB/cm. Round-trip distance = 10 cm. 2 × 10 = 20 dB."],
+["Doppler","The Doppler shift is greatest when the angle between the beam and the flow is:",["0°","45°","60°","90°"],0,"Shift is proportional to the cosine of the angle. Cosine of 0° is 1 (maximum) and cosine of 90° is 0 (no shift)."],
+["Doppler","Which change helps reduce aliasing in pulsed-wave Doppler?",["Use a higher-frequency transducer","Decrease the velocity scale (PRF)","Use a lower-frequency transducer","Decrease the Doppler angle toward 0°"],2,"Aliasing occurs when the Doppler shift exceeds the Nyquist limit (half the PRF). A lower frequency reduces the shift. Raising the scale or shifting the baseline also helps."],
+["Artifacts","A duplicate image of a structure appears deeper than a strong reflector such as the diaphragm. This is:",["Shadowing","Enhancement","Mirror image","Side lobe"],2,"Sound bounces off the strong reflector and returns by a longer path, so the scanner draws a copy deeper than the real structure."],
+["Artifacts","Posterior acoustic enhancement is typically seen behind:",["A gallstone","A simple fluid-filled cyst","Bone","Calcified plaque"],1,"Fluid attenuates very little, so tissue behind a cyst receives more sound and looks brighter. Stones, bone, and calcification cause shadowing instead."],
+["Artifacts","Equally spaced, repeating echoes deep to two strong parallel reflectors are called:",["Reverberation","Refraction","Speckle","Range ambiguity"],0,"Sound bounces back and forth between the reflectors. Each round trip adds another echo, and the scanner places them at equal intervals deeper."],
+["Doppler","Which Doppler mode does not alias?",["Pulsed-wave","Color Doppler","Duplex pulsed-wave","Continuous-wave"],3,"Continuous-wave Doppler transmits and receives constantly, so there is no sampling limit. The trade-off is that it has no range resolution."],
+["Instrumentation","Which change decreases frame rate?",["Decreasing imaging depth","Narrowing the sector width","Adding more focal zones","Reducing line density"],2,"Each added focal zone needs extra pulses per scan line, so each frame takes longer. Greater depth, wider sectors, and higher line density also lower frame rate."],
+["Safety","The mechanical index (MI) is an estimate of the likelihood of:",["Aliasing","Tissue heating","Attenuation","Cavitation"],3,"MI relates to the risk of cavitation. The thermal index (TI) relates to tissue heating."],
+["Safety","The ALARA principle means exposure should be:",["Adjusted according to patient age","Always set to maximum output","Avoided in all pregnancies","As low as reasonably achievable"],3,"ALARA stands for as low as reasonably achievable. Use the lowest output and shortest scan time that still gives a diagnostic answer."],
+["Transducers","What is the ideal thickness of a transducer’s matching layer?",["One wavelength","One-half wavelength","One-quarter wavelength","Twice the wavelength"],2,"A quarter-wavelength matching layer improves sound transmission between the high-impedance crystal and the lower-impedance skin."],
+["Hemodynamics","Blood flows through a stenosis. Compared with the vessel before the narrowing, the flow at the narrowest point has:",["Higher velocity and lower pressure","Lower velocity and higher pressure","Unchanged velocity","Higher velocity and higher pressure"],0,"By the continuity equation, velocity rises where the area shrinks. By Bernoulli’s principle, pressure drops where velocity rises."],
+["Resolution","Lateral resolution is best:",["At the transducer surface","In the far field","Where pulse length is shortest","At the focus, where the beam is narrowest"],3,"Lateral resolution equals beam width, which is smallest at the focus."],
+["Anatomy","In the parasternal long-axis view, which structure lies directly in front of (anterior to) the aortic root?",["Left atrium","Right ventricular outflow tract","Descending aorta","Coronary sinus"],1,"The right ventricular outflow tract sits at the top of the image, closest to the transducer. The left atrium is behind the aortic root."],
+["Anatomy","Which structure is in fibrous continuity with the aortic valve?",["Posterior mitral leaflet","Septal tricuspid leaflet","Anterior mitral leaflet","Pulmonic valve"],2,"The anterior mitral leaflet and the aortic valve share a fibrous connection (aortic-mitral continuity), best seen in the parasternal long-axis view."],
+["Anatomy","The sinoatrial node is most often supplied by the:",["Right coronary artery","Left anterior descending artery","Left circumflex artery","Posterior descending artery"],0,"In most people the sinoatrial nodal artery comes from the right coronary artery. In a minority of people it comes from the left circumflex."],
+["Anatomy","The moderator band is a landmark of which chamber?",["Left ventricle","Left atrium","Right atrium","Right ventricle"],3,"The moderator band is a muscle bundle crossing the right ventricle. It helps you tell the right ventricle from the left ventricle on echo."],
+["Anatomy","In the parasternal short-axis view at the aortic valve level, which cusp lies next to the interatrial septum?",["Right coronary cusp","Left coronary cusp","Non-coronary cusp","Pulmonic cusp"],2,"The non-coronary cusp sits next to the interatrial septum. The right coronary cusp is the most anterior, closest to the right ventricular outflow tract."]
+];
+function W(x0,x1,cyc,amp,y){var p="",n=Math.max(24,Math.round((x1-x0)/2));for(var i=0;i<=n;i++){var x=x0+(x1-x0)*i/n;p+=(i?"L":"M")+x.toFixed(1)+" "+(y-amp*Math.sin(2*Math.PI*cyc*i/n)).toFixed(1)}return p}
+function AR(x1,y1,x2,y2,c){var a=Math.atan2(y2-y1,x2-x1),h=7,l=Math.PI/7;return '<path class="'+c+'" d="M'+x1+' '+y1+'L'+x2+' '+y2+'"/><path class="'+c+'" d="M'+(x2-h*Math.cos(a-l)).toFixed(1)+' '+(y2-h*Math.sin(a-l)).toFixed(1)+'L'+x2+' '+y2+'L'+(x2-h*Math.cos(a+l)).toFixed(1)+' '+(y2-h*Math.sin(a+l)).toFixed(1)+'"/>'}
+function TX(x,y,t,c,a){return '<text x="'+x+'" y="'+y+'"'+(c?' class="'+c+'"':'')+(a?' text-anchor="'+a+'"':'')+'>'+t+'</text>'}
+var IMG={
+0:{p:"exp",vb:"0 0 320 150",alt:"Three cycles of a wave with one period marked",s:
+TX(20,18,"5 MHz = 5 million cycles per second","m")+'<path class="a" d="'+W(20,260,3,32,70)+'"/><path class="l" d="M20 114V126M100 114V126M20 120H100"/>'+TX(110,124,"One period (T) = 1 ÷ frequency")+TX(20,144,"T = 1 ÷ 5,000,000 s = 0.2 µs","m")},
+2:{p:"stem",vb:"0 0 320 130",alt:"A pulse travels from the transducer to a reflector and returns",s:
+'<rect class="f" x="14" y="32" width="12" height="64"/><path class="b" d="M250 28V100"/>'+AR(30,52,244,52,"a")+AR(244,78,30,78,"r")+TX(14,20,"Transducer","m")+TX(250,20,"Reflector","m","middle")+TX(30,118,"Round trip time = 39 µs. Depth = ?","m")},
+4:{p:"exp",vb:"0 0 320 175",alt:"A long pulse blurs two close reflectors into one echo while a short pulse separates them",s:
+TX(20,14,"Long pulse","m")+'<path class="a" d="'+W(20,170,7,10,40)+'"/><path class="b" d="M215 25V55M245 25V55"/>'+TX(20,72,"Echoes overlap: reflectors blur into one","m")+
+TX(20,94,"Short pulse","m")+'<path class="a" d="'+W(20,60,2,10,118)+'"/><path class="b" d="M215 103V133M245 103V133"/>'+TX(20,150,"Two separate echoes: reflectors resolved","m")+
+TX(20,168,"Axial resolution = ½ × spatial pulse length")},
+5:{p:"exp",vb:"0 0 320 160",alt:"Sound meeting a boundary between two media, partly reflected and partly transmitted",s:
+'<path class="b" d="M160 24V124"/>'+TX(30,18,"Medium 1 (Z₁)","m")+TX(190,18,"Medium 2 (Z₂)","m")+AR(30,60,154,60,"a")+AR(154,95,30,95,"r")+AR(166,60,290,60,"a")+TX(160,142,"Echo strength depends on Z₂ − Z₁","","middle")+TX(160,157,"Z = density × speed","m","middle")},
+6:{p:"exp",vb:"0 0 320 165",alt:"A ray bending as it crosses a boundary at an angle into a medium with faster sound speed",s:
+'<path class="b" d="M20 80H300"/><path class="g" d="M160 15V145"/>'+AR(90,20,160,80,"a")+AR(160,80,255,135,"a")+TX(30,40,"Medium 1 (speed c₁)","m")+TX(30,110,"Medium 2 (speed c₂ > c₁)","m")+TX(160,160,"Needs oblique incidence AND different speeds","","middle")},
+8:{p:"stem",vb:"0 0 320 175",alt:"A beam crossing a vessel at an angle theta to the direction of blood flow",s:
+'<path class="l" d="M20 95H300M20 125H300"/>'+AR(60,22,146,106,"l")+'<path class="g" d="M150 110L195 155"/>'+AR(150,110,260,110,"a")+'<path class="l" d="M190 110A40 40 0 0 1 178.3 138.3"/>'+TX(202,132,"θ")+TX(20,14,"Transducer","m")+TX(95,52,"Beam","m")+TX(215,88,"Blood flow","m")+TX(20,170,"θ = angle between beam and flow","m")},
+9:{p:"stem",vb:"0 0 320 178",alt:"A Doppler spectral display where the velocity peak wraps around to the opposite edge",s:
+'<path class="g" d="M20 20H300M20 130H300"/><path class="l" d="M20 75H300"/>'+TX(24,14,"Velocity scale limit","m")+TX(24,146,"Velocity scale limit","m")+
+[0,120].map(function(o){return '<path class="a" d="M'+(40+o)+' 75Q'+(48+o)+' 45 '+(56+o)+' 20"/><path class="r" d="M'+(56+o)+' 130Q'+(62+o)+' 112 '+(68+o)+' 130"/><path class="a" d="M'+(68+o)+' 20Q'+(78+o)+' 45 '+(86+o)+' 75"/>'}).join("")+TX(160,168,"Aliased display: the peak wraps to the other side","m","middle")},
+10:{p:"exp",vb:"0 0 320 178",alt:"Sound reflects off a strong reflector to a structure and back, so a duplicate is drawn deeper along the beam",s:
+'<rect class="f" x="150" y="4" width="60" height="8"/>'+TX(216,12,"Transducer","m")+'<path class="g" d="M180 12V146"/><path class="b" d="M30 70H290"/>'+TX(32,62,"Strong reflector (diaphragm)","m")+'<circle class="fa" cx="110" cy="38" r="12"/>'+TX(60,22,"Real structure","m")+AR(180,14,180,66,"a")+AR(180,70,122,46,"a")+'<circle class="g" cx="180" cy="146" r="12"/>'+TX(198,150,"Mirror image (deeper)","m")+TX(20,172,"Longer round trip: the copy is drawn deeper","m")},
+11:{p:"exp",vb:"0 0 320 178",alt:"A bright band behind a fluid-filled cyst and a dark shadow behind a stone",s:
+'<rect class="t" x="10" y="10" width="300" height="140"/><circle class="w" cx="80" cy="50" r="22"/><rect class="br" x="58" y="72" width="44" height="78"/><ellipse class="st" cx="240" cy="50" rx="22" ry="12"/><rect class="k" x="218" y="62" width="44" height="88"/>'+TX(80,168,"Cyst: brighter behind","","middle")+TX(240,168,"Stone: dark shadow","","middle")},
+12:{p:"exp",vb:"0 0 320 178",alt:"Two parallel reflectors followed by equally spaced fading repeat echoes",s:
+'<rect class="f" x="100" y="4" width="60" height="8"/>'+TX(170,12,"Transducer","m")+'<path class="b" d="M60 40H200M60 70H200"/><path class="g" style="opacity:.85" d="M60 100H200"/><path class="g" style="opacity:.6" d="M60 130H200"/><path class="g" style="opacity:.4" d="M60 160H200"/>'+TX(210,58,"Real reflectors","m")+TX(210,128,"Repeat echoes:","m")+TX(210,143,"equal spacing,","m")+TX(210,158,"getting fainter","m")},
+17:{p:"exp",vb:"0 0 320 135",alt:"A crystal, a matching layer one quarter wavelength thick, and skin",s:
+'<rect class="fa" x="20" y="30" width="110" height="60"/><rect class="ma" x="130" y="30" width="26" height="60"/><rect class="t" x="156" y="30" width="140" height="60"/>'+TX(75,64,"Crystal (high Z)","","middle")+TX(226,64,"Skin (lower Z)","","middle")+TX(143,22,"Matching layer","m","middle")+'<path class="l" d="M130 100V108M156 100V108M130 104H156"/>'+TX(143,124,"λ/4","","middle")},
+18:{p:"stem",vb:"0 0 320 150",alt:"Blood flowing through a vessel that narrows and then widens again",s:
+'<path class="l" d="M20 45H100C125 45 125 68 150 68H170C195 68 195 45 220 45H300"/><path class="l" d="M20 135H100C125 135 125 112 150 112H170C195 112 195 135 220 135H300"/>'+AR(30,70,85,70,"a")+AR(30,90,85,90,"a")+AR(30,110,85,110,"a")+AR(138,90,182,90,"a")+AR(235,70,290,70,"a")+AR(235,90,290,90,"a")+AR(235,110,290,110,"a")+TX(20,30,"Before","m")+TX(160,30,"Narrowest point","m","middle")+TX(300,30,"After","m","end")},
+19:{p:"exp",vb:"0 0 320 175",alt:"A focused ultrasound beam that is narrowest at the focus",s:
+'<polygon class="fa" points="70,10 102,85 75,160 145,160 118,85 150,10"/>'+TX(160,14,"Transducer","m")+TX(160,84,"Focus: narrowest beam")+TX(160,100,"= best lateral resolution")}
+};
+function dg(id,pos){var m=IMG[id];return m&&m.p==pos?'<svg class="dg" role="img" aria-label="'+m.alt+'" viewBox="'+m.vb+'">'+m.s+'</svg>':""}
+
+var T=[];Q.forEach(function(q){if(T.indexOf(q[0])<0)T.push(q[0])});
+var KEY="spi_practice_v1",D={stats:{},flags:{},sessions:[],days:{}};
+try{var L=JSON.parse(localStorage.getItem(KEY));if(L&&L.stats)D=L}catch(e){}
+D.days=D.days||{};D.sessions=D.sessions||[];D.flags=D.flags||{};
+function dkey(d){return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){}}
+var bk="",bm="";
+function esc(t){return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function showBk(m){bk=(bk==m?"":m);bm="";progress()}
+function doRestore(){var t=document.getElementById("rt").value;try{var R=JSON.parse(t);if(!R||!R.stats)throw 0;D=R;D.days=D.days||{};D.sessions=D.sessions||[];D.flags=D.flags||{};save();bk="";bm="Backup restored.";progress()}catch(e){bm="That text is not a valid backup.";progress()}}
+function backupCard(){return '<div class="card"><h2>Backup</h2><p class="mute">Your progress is saved on this phone. Show a backup now and then and keep it in Notes.</p><div class="row"><button class="ghost" onclick="showBk(\'show\')">Show backup</button><button class="ghost" onclick="showBk(\'restore\')">Restore</button></div>'+(bm?'<p>'+bm+'</p>':"")+(bk=="show"?'<textarea readonly rows="5" onfocus="this.select()">'+esc(JSON.stringify(D))+'</textarea>':"")+(bk=="restore"?'<textarea id="rt" rows="5" placeholder="Paste backup here"></textarea><button class="primary" onclick="doRestore()">Restore this backup</button>':"")+'</div>'}
+var S=null,view="home",mode="tutor",topic="All",armed=false,A=document.getElementById("app");
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function rec(id,ok){var s=D.stats[id]||{a:0,c:0};s.a++;if(ok)s.c++;s.l=ok?1:0;D.stats[id]=s;var k=dkey(new Date()),d=D.days[k]||{a:0,c:0};d.a++;if(ok)d.c++;D.days[k]=d;save()}
+function todayA(){var d=D.days[dkey(new Date())];return d?d.a:0}
+function logSession(){var n=0,sc=0;S.ids.forEach(function(id){if(S.ans[id]!==undefined){n++;if(S.ans[id]===Q[id][3])sc++}});if(!n)return;var e=null;D.sessions.forEach(function(x){if(x.d==S.sid)e=x});if(!e){e={d:S.sid};D.sessions.push(e)}e.s=sc;e.n=n;e.p=S.ids.length;e.m=S.mode;save()}
+function commitTest(){if(S.mode=="test"&&!S.committed){S.committed=1;S.ids.forEach(function(id){if(S.ans[id]!==undefined)rec(id,S.ans[id]===Q[id][3])})}}
+function pct(c,a){return a?Math.round(100*c/a):0}
+function ids(f){var r=[];Q.forEach(function(q,i){if(f(q,i))r.push(i)});return r}
+function nav(){var p=view=="progress";return '<nav><button class="'+(p?"":"on")+'" onclick="go(\'home\')">Practice</button><button class="'+(p?"on":"")+'" onclick="go(\'progress\')">Progress</button></nav>'}
+function go(v){if(view=="quiz"&&S){commitTest();logSession()}view=v;armed=false;draw()}
+function draw(){window.scrollTo(0,0);({home:home,quiz:quiz,result:result,progress:progress})[view]()}
+function start(list){if(!list.length)return;S={ids:shuffle(list),i:0,mode:mode,ans:{},sid:Date.now()};view="quiz";draw()}
+function home(){
+var pool=ids(function(q){return topic=="All"||q[0]==topic});
+var missed=ids(function(q,i){return D.stats[i]&&D.stats[i].l===0});
+var flagged=ids(function(q,i){return D.flags[i]});
+var seen=Object.keys(D.stats).length;
+A.innerHTML=nav()+'<div class="card"><h2>New session</h2><div class="mute">Mode</div><div class="seg"><button class="'+(mode=="tutor"?"on":"")+'" onclick="mode=\'tutor\';draw()">Tutor</button><button class="'+(mode=="test"?"on":"")+'" onclick="mode=\'test\';draw()">Test</button></div><div class="mute">'+(mode=="tutor"?"Tutor shows the answer and explanation after each question.":"Test hides answers until you finish, like the real exam.")+'</div><label class="mute" for="t" style="display:block;margin-top:14px">Topic</label><select id="t" onchange="topic=this.value;draw()"><option>All</option>'+T.map(function(t){return '<option'+(t==topic?" selected":"")+'>'+t+'</option>'}).join("")+'</select><button class="primary" onclick="start(ids(function(q){return topic==\'All\'||q[0]==topic}))">Start '+pool.length+' questions</button></div>'+
+'<div class="card"><h2>Review</h2><div class="row"><button class="ghost" '+(missed.length?"":"disabled")+' onclick="start(ids(function(q,i){return D.stats[i]&&D.stats[i].l===0}))">Missed ('+missed.length+')</button><button class="ghost" '+(flagged.length?"":"disabled")+' onclick="start(ids(function(q,i){return D.flags[i]}))">Flagged ('+flagged.length+')</button></div><p class="mute">You have seen '+seen+' of '+Q.length+' questions. Today: '+todayA()+' of 20 answered.</p></div>'}
+function quiz(){
+var id=S.ids[S.i],q=Q[id],sel=S.ans[id],tutor=S.mode=="tutor",shown=tutor&&sel!==undefined,n=S.ids.length;
+var opts=q[2].map(function(o,k){var c="opt";if(shown){if(k==q[3])c+=" ok";else if(k==sel)c+=" bad"}else if(k===sel)c+=" sel";return '<button class="'+c+'" onclick="pick('+k+')" '+(shown?"disabled":"")+'><b>'+"ABCD"[k]+'</b><span>'+o+'</span></button>'}).join("");
+var ex=shown?'<div class="exp '+(sel==q[3]?"good":"miss")+'"><strong>'+(sel==q[3]?"Correct.":"Incorrect.")+'</strong> '+q[4]+dg(id,"exp")+'</div>':"";
+var last=S.i==n-1;
+A.innerHTML=nav()+'<div class="card"><div class="row" style="margin:0 0 8px"><span class="mute">Question '+(S.i+1)+' of '+n+' · '+q[0]+'</span><button class="ghost" onclick="flip('+id+')" aria-pressed="'+!!D.flags[id]+'"><span class="'+(D.flags[id]?"flag":"")+'">'+(D.flags[id]?"Flagged":"Flag")+'</span></button></div><div class="bar"><i style="width:'+(100*S.i/n)+'%"></i></div><p class="stem">'+q[1]+'</p>'+dg(id,"stem")+opts+ex+'<button class="primary" id="nx" '+(tutor&&sel===undefined?"disabled":"")+' onclick="next()">'+(last?"Finish session":"Next question")+'</button><div class="row"><button class="ghost" onclick="go(\'home\')">End session</button><span class="mute">Keys: 1–4 to answer, Enter for next</span></div></div>'}
+function flip(id){if(D.flags[id])delete D.flags[id];else D.flags[id]=1;save();draw()}
+function pick(k){var id=S.ids[S.i];if(S.mode=="tutor"){if(S.ans[id]!==undefined)return;S.ans[id]=k;rec(id,k==Q[id][3]);logSession()}else S.ans[id]=k;draw()}
+function next(){if(S.i<S.ids.length-1){S.i++;draw()}else finish()}
+function finish(){commitTest();logSession();var sc=0;S.ids.forEach(function(id){if(S.ans[id]===Q[id][3])sc++});S.sc=sc;view="result";draw()}
+function result(){
+var n=S.ids.length,p=pct(S.sc,n);
+A.innerHTML=nav()+'<div class="card"><h2>Session complete</h2><div class="big">'+S.sc+' / '+n+'</div><p class="mute">'+p+'% correct · '+(S.mode=="tutor"?"Tutor":"Test")+' mode</p><div class="bar"><i style="width:'+p+'%"></i></div><button class="primary" onclick="go(\'home\')">Back to practice</button></div><div class="card"><h2>Review</h2>'+S.ids.map(function(id,j){var q=Q[id],a=S.ans[id],ok=a===q[3];return '<details><summary>'+(j+1)+'. '+(ok?"Correct":"Incorrect")+' · '+q[0]+'</summary><p>'+q[1]+'</p><p><strong>Your answer:</strong> '+(a===undefined?"No answer":q[2][a])+'<br><strong>Correct answer:</strong> '+q[2][q[3]]+'</p><p class="mute">'+q[4]+'</p>'+dg(id,"stem")+dg(id,"exp")+'</details>'}).join("")+'</div>'}
+function progress(){
+var tot=0,cor=0;Object.keys(D.stats).forEach(function(k){tot+=D.stats[k].a;cor+=D.stats[k].c});
+var rows=T.map(function(t){var a=0,c=0;Q.forEach(function(q,i){if(q[0]==t&&D.stats[i]){a+=D.stats[i].a;c+=D.stats[i].c}});var p=pct(c,a);return '<div class="trow"><div><span>'+t+'</span><span class="mute">'+(a?p+'% of '+a:"Not started")+'</span></div><div class="bar"><i style="width:'+p+'%"></i></div></div>'}).join("");
+var rd="",streak=0;for(var i=0;i<7;i++){var d=new Date();d.setDate(d.getDate()-i);var e=D.days[dkey(d)]||{a:0,c:0};rd+='<div class="trow"><div><span>'+(i==0?"Today":d.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"}))+'</span><span class="mute">'+(e.a?e.a+' answered · '+pct(e.c,e.a)+'% correct':"No practice")+'</span></div><div class="bar"><i style="width:'+Math.min(100,100*e.a/20)+'%"></i></div></div>'}
+for(var j=0;j<400;j++){var dd=new Date();dd.setDate(dd.getDate()-j);var ee=D.days[dkey(dd)];if(ee&&ee.a>0)streak++;else if(j>0)break}
+var ses=D.sessions.slice(-8).reverse().map(function(s){return '<div class="row" style="margin:6px 0"><span>'+new Date(s.d).toLocaleDateString()+' · '+(s.m=="tutor"?"Tutor":"Test")+(s.p&&s.p>s.n?" · partial":"")+'</span><strong>'+s.s+'/'+s.n+' ('+pct(s.s,s.n)+'%)</strong></div>'}).join("")||'<p class="mute">No sessions yet. Finish one to see it here.</p>';
+A.innerHTML=nav()+'<div class="card"><h2>Overall</h2><div class="big">'+pct(cor,tot)+'%</div><p class="mute">'+cor+' correct of '+tot+' answered · '+D.sessions.length+' sessions</p></div><div class="card"><h2>Daily practice</h2><p class="mute">Goal: 20 questions a day · streak: '+streak+' day'+(streak==1?"":"s")+'</p>'+rd+'</div><div class="card"><h2>By topic</h2>'+rows+'</div><div class="card"><h2>Recent sessions</h2>'+ses+'</div>'+backupCard()+'<button class="ghost" onclick="reset()">'+(armed?"Tap again to erase all progress":"Reset progress")+'</button>'}
+function reset(){if(!armed){armed=true;draw();return}D={stats:{},flags:{},sessions:[],days:{}};save();armed=false;draw()}
+document.addEventListener("keydown",function(e){if(view!="quiz")return;if(e.key>="1"&&e.key<="4"){pick(+e.key-1)}else if(e.key=="Enter"){var b=document.getElementById("nx");if(b&&!b.disabled)next()}});
+draw();
+</script>
+</body>
+</html>
