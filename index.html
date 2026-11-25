@@ -82,7 +82,7 @@ textarea{width:100%;margin-top:10px;padding:10px;border:1px solid var(--line);bo
 </header>
 <div id="app"></div>
 </main>
-<script src="questions.js?v=2"></script>
+<script src="questions.js?v=3"></script>
 <script>
 var T=[];Q.forEach(function(q){if(T.indexOf(q[0])<0)T.push(q[0])});
 var KEY="spi_practice_v1",D={stats:{},flags:{},sessions:[],days:{}};
@@ -95,6 +95,8 @@ function esc(t){return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g
 function showBk(m){bk=(bk==m?"":m);bm="";progress()}
 function doRestore(){var t=document.getElementById("rt").value;try{var R=JSON.parse(t);if(!R||!R.stats)throw 0;D=R;D.days=D.days||{};D.sessions=D.sessions||[];D.flags=D.flags||{};save();bk="";bm="Backup restored.";progress()}catch(e){bm="That text is not a valid backup.";progress()}}
 function backupCard(){return '<div class="card"><h2>Backup</h2><p class="mute">Your progress is saved on this phone. Show a backup now and then and keep it in Notes.</p><div class="row"><button class="ghost" onclick="showBk(\'show\')">Show backup</button><button class="ghost" onclick="showBk(\'restore\')">Restore</button></div>'+(bm?'<p>'+bm+'</p>':"")+(bk=="show"?'<textarea readonly rows="5" onfocus="this.select()">'+esc(JSON.stringify(D))+'</textarea>':"")+(bk=="restore"?'<textarea id="rt" rows="5" placeholder="Paste backup here"></textarea><button class="primary" onclick="doRestore()">Restore this backup</button>':"")+'</div>'}
+var level="All";
+function inPool(q){return (topic=="All"||q[0]==topic)&&(level=="All"||(level=="Challenge")==(q[6]=="C"))}
 var S=null,view="home",mode="tutor",topic="All",armed=false,A=document.getElementById("app");
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
 function rec(id,ok){var s=D.stats[id]||{a:0,c:0};s.a++;if(ok)s.c++;s.l=ok?1:0;D.stats[id]=s;var k=dkey(new Date()),d=D.days[k]||{a:0,c:0};d.a++;if(ok)d.c++;D.days[k]=d;save()}
@@ -108,19 +110,19 @@ function go(v){if(view=="quiz"&&S){commitTest();logSession()}view=v;armed=false;
 function draw(){window.scrollTo(0,0);({home:home,quiz:quiz,result:result,progress:progress})[view]()}
 function start(list){if(!list.length)return;S={ids:shuffle(list),i:0,mode:mode,ans:{},sid:Date.now()};view="quiz";draw()}
 function home(){
-var pool=ids(function(q){return topic=="All"||q[0]==topic});
+var pool=ids(inPool);
 var missed=ids(function(q,i){return D.stats[i]&&D.stats[i].l===0});
 var flagged=ids(function(q,i){return D.flags[i]});
 var fresh=ids(function(q){return q[5]});
 var seen=Object.keys(D.stats).length;
-A.innerHTML=nav()+'<div class="card"><h2>New session</h2><div class="mute">Mode</div><div class="seg"><button class="'+(mode=="tutor"?"on":"")+'" onclick="mode=\'tutor\';draw()">Tutor</button><button class="'+(mode=="test"?"on":"")+'" onclick="mode=\'test\';draw()">Test</button></div><div class="mute">'+(mode=="tutor"?"Tutor shows the answer and explanation after each question.":"Test hides answers until you finish, like the real exam.")+'</div><label class="mute" for="t" style="display:block;margin-top:14px">Topic</label><select id="t" onchange="topic=this.value;draw()"><option>All</option>'+T.map(function(t){return '<option'+(t==topic?" selected":"")+'>'+t+'</option>'}).join("")+'</select><button class="primary" onclick="start(ids(function(q){return topic==\'All\'||q[0]==topic}))">Start '+pool.length+' questions</button></div>'+
+A.innerHTML=nav()+'<div class="card"><h2>New session</h2><div class="mute">Mode</div><div class="seg"><button class="'+(mode=="tutor"?"on":"")+'" onclick="mode=\'tutor\';draw()">Tutor</button><button class="'+(mode=="test"?"on":"")+'" onclick="mode=\'test\';draw()">Test</button></div><div class="mute">'+(mode=="tutor"?"Tutor shows the answer and explanation after each question.":"Test hides answers until you finish, like the real exam.")+'</div><label class="mute" for="t" style="display:block;margin-top:14px">Topic</label><select id="t" onchange="topic=this.value;draw()"><option>All</option>'+T.map(function(t){return '<option'+(t==topic?" selected":"")+'>'+t+'</option>'}).join("")+'</select><label class="mute" for="lv" style="display:block;margin-top:14px">Level</label><select id="lv" onchange="level=this.value;draw()">'+["All","Foundation","Challenge"].map(function(t){return '<option'+(t==level?" selected":"")+'>'+t+'</option>'}).join("")+'</select><button class="primary" onclick="start(ids(inPool))">Start '+pool.length+' questions</button></div>'+
 '<div class="card"><h2>Review</h2><div class="row"><button class="ghost" '+(missed.length?"":"disabled")+' onclick="start(ids(function(q,i){return D.stats[i]&&D.stats[i].l===0}))">Missed ('+missed.length+')</button><button class="ghost" '+(flagged.length?"":"disabled")+' onclick="start(ids(function(q,i){return D.flags[i]}))">Flagged ('+flagged.length+')</button></div><div class="row"><button class="ghost" '+(fresh.length?"":"disabled")+' onclick="start(ids(function(q){return q[5]}))">New, unchecked ('+fresh.length+')</button></div><p class="mute">You have seen '+seen+' of '+Q.length+' questions. Today: '+todayA()+' of 20 answered.</p></div>'}
 function quiz(){
 var id=S.ids[S.i],q=Q[id],sel=S.ans[id],tutor=S.mode=="tutor",shown=tutor&&sel!==undefined,n=S.ids.length;
 var opts=q[2].map(function(o,k){var c="opt";if(shown){if(k==q[3])c+=" ok";else if(k==sel)c+=" bad"}else if(k===sel)c+=" sel";return '<button class="'+c+'" onclick="pick('+k+')" '+(shown?"disabled":"")+'><b>'+"ABCD"[k]+'</b><span>'+o+'</span></button>'}).join("");
 var ex=shown?'<div class="exp '+(sel==q[3]?"good":"miss")+'"><strong>'+(sel==q[3]?"Correct.":"Incorrect.")+'</strong> '+q[4]+dg(id,"exp")+'</div>':"";
 var last=S.i==n-1;
-A.innerHTML=nav()+'<div class="card"><div class="row" style="margin:0 0 8px"><span class="mute">Question '+(S.i+1)+' of '+n+' · '+q[0]+(q[5]?' · <span class="flag">New, unchecked</span>':'')+'</span><button class="ghost" onclick="flip('+id+')" aria-pressed="'+!!D.flags[id]+'"><span class="'+(D.flags[id]?"flag":"")+'">'+(D.flags[id]?"Flagged":"Flag")+'</span></button></div><div class="bar"><i style="width:'+(100*S.i/n)+'%"></i></div><p class="stem">'+q[1]+'</p>'+dg(id,"stem")+opts+ex+'<button class="primary" id="nx" '+(tutor&&sel===undefined?"disabled":"")+' onclick="next()">'+(last?"Finish session":"Next question")+'</button><div class="row"><button class="ghost" onclick="go(\'home\')">End session</button><span class="mute">Keys: 1–4 to answer, Enter for next</span></div></div>'}
+A.innerHTML=nav()+'<div class="card"><div class="row" style="margin:0 0 8px"><span class="mute">Question '+(S.i+1)+' of '+n+' · '+q[0]+(q[6]=="C"?' · Challenge':'')+(q[5]?' · <span class="flag">New, unchecked</span>':'')+'</span><button class="ghost" onclick="flip('+id+')" aria-pressed="'+!!D.flags[id]+'"><span class="'+(D.flags[id]?"flag":"")+'">'+(D.flags[id]?"Flagged":"Flag")+'</span></button></div><div class="bar"><i style="width:'+(100*S.i/n)+'%"></i></div><p class="stem">'+q[1]+'</p>'+dg(id,"stem")+opts+ex+'<button class="primary" id="nx" '+(tutor&&sel===undefined?"disabled":"")+' onclick="next()">'+(last?"Finish session":"Next question")+'</button><div class="row"><button class="ghost" onclick="go(\'home\')">End session</button><span class="mute">Keys: 1–4 to answer, Enter for next</span></div></div>'}
 function flip(id){if(D.flags[id])delete D.flags[id];else D.flags[id]=1;save();draw()}
 function pick(k){var id=S.ids[S.i];if(S.mode=="tutor"){if(S.ans[id]!==undefined)return;S.ans[id]=k;rec(id,k==Q[id][3]);logSession()}else S.ans[id]=k;draw()}
 function next(){if(S.i<S.ids.length-1){S.i++;draw()}else finish()}
