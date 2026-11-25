@@ -1,0 +1,20 @@
+{
+  "name": "SPI Practice",
+  "short_name": "SPI Practice",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#EDF1F3",
+  "theme_color": "#0F6E7A",
+  "icons": [
+    {
+      "src": "icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
