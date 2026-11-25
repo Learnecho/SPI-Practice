@@ -1,4 +1,4 @@
-# SPI Practice
+# Learn Echo (repo: SPI-Practice)
 
 Static web app served by GitHub Pages and installed on the owner's iPhone Home Screen.
 
