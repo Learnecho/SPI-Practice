@@ -83,6 +83,7 @@ textarea{width:100%;margin-top:10px;padding:10px;border:1px solid var(--line);bo
 <div id="app"></div>
 </main>
 <script src="questions.js?v=3"></script>
+<script src="echo-images.js?v=1"></script>
 <script>
 var T=[];Q.forEach(function(q){if(T.indexOf(q[0])<0)T.push(q[0])});
 var KEY="spi_practice_v1",D={stats:{},flags:{},sessions:[],days:{}};
@@ -105,9 +106,9 @@ function logSession(){var n=0,sc=0;S.ids.forEach(function(id){if(S.ans[id]!==und
 function commitTest(){if(S.mode=="test"&&!S.committed){S.committed=1;S.ids.forEach(function(id){if(S.ans[id]!==undefined)rec(id,S.ans[id]===Q[id][3])})}}
 function pct(c,a){return a?Math.round(100*c/a):0}
 function ids(f){var r=[];Q.forEach(function(q,i){if(f(q,i))r.push(i)});return r}
-function nav(){var p=view=="progress";return '<nav><button class="'+(p?"":"on")+'" onclick="go(\'home\')">Practice</button><button class="'+(p?"on":"")+'" onclick="go(\'progress\')">Progress</button></nav>'}
+function nav(){var p=view=="progress",im=view=="images";return '<nav><button class="'+(p||im?"":"on")+'" onclick="go(\'home\')">Practice</button><button class="'+(im?"on":"")+'" onclick="go(\'images\')">Images</button><button class="'+(p?"on":"")+'" onclick="go(\'progress\')">Progress</button></nav>'}
 function go(v){if(view=="quiz"&&S){commitTest();logSession()}view=v;armed=false;draw()}
-function draw(){window.scrollTo(0,0);({home:home,quiz:quiz,result:result,progress:progress})[view]()}
+function draw(){window.scrollTo(0,0);({home:home,quiz:quiz,result:result,progress:progress,images:images})[view]()}
 function start(list){if(!list.length)return;S={ids:shuffle(list),i:0,mode:mode,ans:{},sid:Date.now()};view="quiz";draw()}
 function home(){
 var pool=ids(inPool);
