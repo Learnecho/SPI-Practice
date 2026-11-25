@@ -71,6 +71,13 @@ summary{cursor:pointer}
 .sync.warn{border-left-color:var(--flag)}
 .sync.wait{border-left-color:var(--mute)}
 .sync .ghost{margin-top:8px}
+.timer{font-variant-numeric:tabular-nums;font-weight:600}
+.timer.low{color:var(--bad)}
+.hero{background:var(--accent);color:#fff;border:0}
+.hero .mute{color:#fff;opacity:.85}
+.hero .primary{background:#fff;color:var(--accent)}
+input[type=text]{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:16px/1.4 -apple-system,sans-serif;margin-top:8px}
+table.tp{width:100%;border-collapse:collapse;font-size:14px}table.tp td{padding:6px 0;border-top:1px solid var(--line)}table.tp td:last-child{text-align:right;white-space:nowrap}
 textarea{width:100%;margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:13px/1.4 ui-monospace,Menlo,monospace}
 </style>
 </head>
@@ -82,8 +89,8 @@ textarea{width:100%;margin-top:10px;padding:10px;border:1px solid var(--line);bo
 </header>
 <div id="app"></div>
 </main>
-<script src="questions.js?v=4"></script>
-<script src="echo-images.js?v=4"></script>
+<script src="questions.js?v=5"></script>
+<script src="echo-images.js?v=5"></script>
 <script>
 var T=[];Q.forEach(function(q){if(T.indexOf(q[0])<0)T.push(q[0])});
 var KEY="spi_practice_v1",D={stats:{},flags:{},sessions:[],days:{}};
@@ -100,48 +107,63 @@ var level="All";
 function inPool(q){return (topic=="All"||q[0]==topic)&&(level=="All"||(level=="Challenge")==(q[6]=="C"))}
 var S=null,view="home",mode="tutor",topic="All",armed=false,A=document.getElementById("app");
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
-function rec(id,ok){var s=D.stats[id]||{a:0,c:0};s.a++;if(ok)s.c++;s.l=ok?1:0;D.stats[id]=s;var k=dkey(new Date()),d=D.days[k]||{a:0,c:0};d.a++;if(ok)d.c++;D.days[k]=d;save()}
+var GAP=[1,2,4,7,14,30];
+function dayN(){var d=new Date();return Math.floor((d.getTime()-d.getTimezoneOffset()*60000)/86400000)}
+function due(i){var s=D.stats[i];return !!s&&(s.d===undefined?s.l===0:s.d<=dayN())}
+function rec(id,ok){var s=D.stats[id]||{a:0,c:0};s.a++;if(ok)s.c++;s.l=ok?1:0;s.b=ok?Math.min((s.b||0)+1,GAP.length):0;s.d=dayN()+(ok?GAP[s.b-1]:0);D.stats[id]=s;var k=dkey(new Date()),d=D.days[k]||{a:0,c:0};d.a++;if(ok)d.c++;D.days[k]=d;save()}
 function todayA(){var d=D.days[dkey(new Date())];return d?d.a:0}
-function logSession(){var n=0,sc=0;S.ids.forEach(function(id){if(S.ans[id]!==undefined){n++;if(S.ans[id]===Q[id][3])sc++}});if(!n)return;var e=null;D.sessions.forEach(function(x){if(x.d==S.sid)e=x});if(!e){e={d:S.sid};D.sessions.push(e)}e.s=sc;e.n=n;e.p=S.ids.length;e.m=S.mode;save()}
+function logSession(){var n=0,sc=0;S.ids.forEach(function(id){if(S.ans[id]!==undefined){n++;if(S.ans[id]===Q[id][3])sc++}});if(!n)return;var e=null;D.sessions.forEach(function(x){if(x.d==S.sid)e=x});if(!e){e={d:S.sid};D.sessions.push(e)}e.s=sc;e.n=n;e.p=S.ids.length;e.m=S.mode;if(S.exam)e.x=1;save()}
 function commitTest(){if(S.mode=="test"&&!S.committed){S.committed=1;S.ids.forEach(function(id){if(S.ans[id]!==undefined)rec(id,S.ans[id]===Q[id][3])})}}
 function pct(c,a){return a?Math.round(100*c/a):0}
 function ids(f){var r=[];Q.forEach(function(q,i){if(f(q,i))r.push(i)});return r}
 function nav(){var p=view=="progress",im=view=="images";return '<nav><button class="'+(p||im?"":"on")+'" onclick="go(\'home\')">Practice</button><button class="'+(im?"on":"")+'" onclick="go(\'images\')">Images</button><button class="'+(p?"on":"")+'" onclick="go(\'progress\')">Progress</button></nav>'}
-function go(v){if(view=="quiz"&&S){commitTest();logSession()}view=v;armed=false;draw()}
+function go(v){if(view=="quiz"&&S){stopT();commitTest();logSession()}view=v;armed=false;draw()}
 function draw(){window.scrollTo(0,0);({home:home,quiz:quiz,result:result,progress:progress,images:images})[view]()}
-function start(list){if(!list.length)return;S={ids:shuffle(list),i:0,mode:mode,ans:{},sid:Date.now()};view="quiz";draw()}
+function start(list,o){if(!list.length)return;o=o||{};stopT();S={ids:o.keep?list:shuffle(list),i:0,mode:o.mode||mode,ans:{},sid:Date.now(),exam:!!o.secs};if(o.secs){S.end=Date.now()+o.secs*1000;tick=setInterval(tickT,1000)}view="quiz";draw()}
+function daily(){var left=Math.max(0,20-todayA());if(!left)left=20;var d=shuffle(ids(function(q,i){return due(i)})),n=shuffle(ids(function(q,i){return !D.stats[i]})),r=shuffle(ids(function(q,i){return D.stats[i]&&!due(i)})),out=d.slice(0,Math.ceil(left*0.6));n.concat(d.slice(out.length),r).forEach(function(i){if(out.length<left&&out.indexOf(i)<0)out.push(i)});start(shuffle(out),{keep:1,mode:"tutor"})}
+var exLen=40,tick=null;
+function exN(){return exLen=="All"?Q.length:Math.min(exLen,Q.length)}
+function setLen(v){exLen=v=="All"?"All":+v;draw()}
+function exam(){var n=exN();start(shuffle(ids(function(){return 1})).slice(0,n),{keep:1,mode:"test",secs:Math.round(n*65.5)})}
+function stopT(){if(tick){clearInterval(tick);tick=null}}
+function fmt(ms){var t=Math.max(0,Math.ceil(ms/1000));return Math.floor(t/60)+":"+("0"+t%60).slice(-2)}
+function tickT(){if(!S||!S.exam||view!="quiz"){stopT();return}var r=S.end-Date.now(),e=document.getElementById("tm");if(r<=0){stopT();S.timeout=1;finish();return}if(e){e.textContent=fmt(r);e.className="timer"+(r<300000?" low":"")}}
 function home(){
 var pool=ids(inPool);
 var missed=ids(function(q,i){return D.stats[i]&&D.stats[i].l===0});
 var flagged=ids(function(q,i){return D.flags[i]});
 var fresh=ids(function(q){return q[5]});
 var seen=Object.keys(D.stats).length;
-A.innerHTML=nav()+'<div class="card"><h2>New session</h2><div class="mute">Mode</div><div class="seg"><button class="'+(mode=="tutor"?"on":"")+'" onclick="mode=\'tutor\';draw()">Tutor</button><button class="'+(mode=="test"?"on":"")+'" onclick="mode=\'test\';draw()">Test</button></div><div class="mute">'+(mode=="tutor"?"Tutor shows the answer and explanation after each question.":"Test hides answers until you finish, like the real exam.")+'</div><label class="mute" for="t" style="display:block;margin-top:14px">Topic</label><select id="t" onchange="topic=this.value;draw()"><option>All</option>'+T.map(function(t){return '<option'+(t==topic?" selected":"")+'>'+t+'</option>'}).join("")+'</select><label class="mute" for="lv" style="display:block;margin-top:14px">Level</label><select id="lv" onchange="level=this.value;draw()">'+["All","Foundation","Challenge"].map(function(t){return '<option'+(t==level?" selected":"")+'>'+t+'</option>'}).join("")+'</select><button class="primary" onclick="start(ids(inPool))">Start '+pool.length+' questions</button></div>'+
-'<div class="card"><h2>Review</h2><div class="row"><button class="ghost" '+(missed.length?"":"disabled")+' onclick="start(ids(function(q,i){return D.stats[i]&&D.stats[i].l===0}))">Missed ('+missed.length+')</button><button class="ghost" '+(flagged.length?"":"disabled")+' onclick="start(ids(function(q,i){return D.flags[i]}))">Flagged ('+flagged.length+')</button></div><div class="row"><button class="ghost" '+(fresh.length?"":"disabled")+' onclick="start(ids(function(q){return q[5]}))">New, unchecked ('+fresh.length+')</button></div><p class="mute">You have seen '+seen+' of '+Q.length+' questions. Today: '+todayA()+' of 20 answered.</p></div>'}
+var dn=ids(function(q,i){return due(i)}).length,ta=todayA();
+A.innerHTML=nav()+'<div class="card hero"><h2>Today\'s 20</h2><p class="mute" style="margin:0 0 8px">'+(ta>=20?"Goal done for today: "+ta+" answered. Tap for 20 more.":ta+" of 20 answered today. Mixes reviews that are due with new questions.")+'</p><div class="bar" style="background:rgba(255,255,255,.3)"><i style="background:#fff;width:'+Math.min(100,ta*5)+'%"></i></div><button class="primary" style="margin-top:12px" onclick="daily()">'+(ta>=20?"Start 20 more":"Start today\'s "+(20-ta))+'</button></div>'+
+'<div class="card"><h2>Exam simulation</h2><p class="mute" style="margin:0">Timed, at real SPI pace: 110 questions in 2 hours, about 65 seconds each. Answers stay hidden until the end, then you get a score by topic.</p><div class="seg">'+["20","40","All"].map(function(n){return '<button class="'+(String(exLen)==n?"on":"")+'" onclick="setLen(\''+n+'\')">'+(n=="All"?"All "+Q.length:n)+'</button>'}).join("")+'</div><button class="primary" onclick="exam()">Start timed exam · '+fmt(exN()*65500)+'</button></div>'+
+'<div class="card"><h2>New session</h2><div class="mute">Mode</div><div class="seg"><button class="'+(mode=="tutor"?"on":"")+'" onclick="mode=\'tutor\';draw()">Tutor</button><button class="'+(mode=="test"?"on":"")+'" onclick="mode=\'test\';draw()">Test</button></div><div class="mute">'+(mode=="tutor"?"Tutor shows the answer and explanation after each question.":"Test hides answers until you finish, like the real exam.")+'</div><label class="mute" for="t" style="display:block;margin-top:14px">Topic</label><select id="t" onchange="topic=this.value;draw()"><option>All</option>'+T.map(function(t){return '<option'+(t==topic?" selected":"")+'>'+t+'</option>'}).join("")+'</select><label class="mute" for="lv" style="display:block;margin-top:14px">Level</label><select id="lv" onchange="level=this.value;draw()">'+["All","Foundation","Challenge"].map(function(t){return '<option'+(t==level?" selected":"")+'>'+t+'</option>'}).join("")+'</select><button class="primary" onclick="start(ids(inPool))">Start '+pool.length+' questions</button></div>'+
+'<div class="card"><h2>Review</h2><button class="primary" '+(dn?"":"disabled")+' onclick="start(ids(function(q,i){return due(i)}),{mode:\'tutor\'})">Smart review: '+dn+' due</button><p class="mute">Missed questions come back the same day. Each time you get one right, it waits longer: 1, 2, 4, 7, 14, then 30 days.</p><div class="row"><button class="ghost" '+(missed.length?"":"disabled")+' onclick="start(ids(function(q,i){return D.stats[i]&&D.stats[i].l===0}))">Missed ('+missed.length+')</button><button class="ghost" '+(flagged.length?"":"disabled")+' onclick="start(ids(function(q,i){return D.flags[i]}))">Flagged ('+flagged.length+')</button></div><div class="row"><button class="ghost" '+(fresh.length?"":"disabled")+' onclick="start(ids(function(q){return q[5]}))">New, unchecked ('+fresh.length+')</button></div><p class="mute">You have seen '+seen+' of '+Q.length+' questions. Today: '+todayA()+' of 20 answered.</p></div>'}
 function quiz(){
 var id=S.ids[S.i],q=Q[id],sel=S.ans[id],tutor=S.mode=="tutor",shown=tutor&&sel!==undefined,n=S.ids.length;
 var opts=q[2].map(function(o,k){var c="opt";if(shown){if(k==q[3])c+=" ok";else if(k==sel)c+=" bad"}else if(k===sel)c+=" sel";return '<button class="'+c+'" onclick="pick('+k+')" '+(shown?"disabled":"")+'><b>'+"ABCD"[k]+'</b><span>'+o+'</span></button>'}).join("");
 var ex=shown?'<div class="exp '+(sel==q[3]?"good":"miss")+'"><strong>'+(sel==q[3]?"Correct.":"Incorrect.")+'</strong> '+q[4]+dg(id,"exp")+'</div>':"";
 var last=S.i==n-1;
-A.innerHTML=nav()+'<div class="card"><div class="row" style="margin:0 0 8px"><span class="mute">Question '+(S.i+1)+' of '+n+' · '+q[0]+(q[6]=="C"?' · Challenge':'')+(q[5]?' · <span class="flag">New, unchecked</span>':'')+'</span><button class="ghost" onclick="flip('+id+')" aria-pressed="'+!!D.flags[id]+'"><span class="'+(D.flags[id]?"flag":"")+'">'+(D.flags[id]?"Flagged":"Flag")+'</span></button></div><div class="bar"><i style="width:'+(100*S.i/n)+'%"></i></div><p class="stem">'+q[1]+'</p>'+dg(id,"stem")+opts+ex+'<button class="primary" id="nx" '+(tutor&&sel===undefined?"disabled":"")+' onclick="next()">'+(last?"Finish session":"Next question")+'</button><div class="row"><button class="ghost" onclick="go(\'home\')">End session</button><span class="mute">Keys: 1–4 to answer, Enter for next</span></div></div>'}
+A.innerHTML=nav()+'<div class="card">'+(S.exam?'<div class="row" style="margin:0 0 8px"><strong>Exam simulation</strong><span>Time left <span id="tm" class="timer">'+fmt(S.end-Date.now())+'</span></span></div>':'')+'<div class="row" style="margin:0 0 8px"><span class="mute">Question '+(S.i+1)+' of '+n+' · '+q[0]+(q[6]=="C"?' · Challenge':'')+(q[5]?' · <span class="flag">New, unchecked</span>':'')+'</span><button class="ghost" onclick="flip('+id+')" aria-pressed="'+!!D.flags[id]+'"><span class="'+(D.flags[id]?"flag":"")+'">'+(D.flags[id]?"Flagged":"Flag")+'</span></button></div><div class="bar"><i style="width:'+(100*S.i/n)+'%"></i></div><p class="stem">'+q[1]+'</p>'+dg(id,"stem")+opts+ex+'<button class="primary" id="nx" '+(tutor&&sel===undefined?"disabled":"")+' onclick="next()">'+(last?"Finish session":"Next question")+'</button><div class="row"><button class="ghost" onclick="go(\'home\')">End session</button><span class="mute">Keys: 1–4 to answer, Enter for next</span></div></div>'}
 function flip(id){if(D.flags[id])delete D.flags[id];else D.flags[id]=1;save();draw()}
 function pick(k){var id=S.ids[S.i];if(S.mode=="tutor"){if(S.ans[id]!==undefined)return;S.ans[id]=k;rec(id,k==Q[id][3]);logSession()}else S.ans[id]=k;draw()}
 function next(){if(S.i<S.ids.length-1){S.i++;draw()}else finish()}
-function finish(){commitTest();logSession();var sc=0;S.ids.forEach(function(id){if(S.ans[id]===Q[id][3])sc++});S.sc=sc;view="result";draw()}
+function finish(){stopT();commitTest();logSession();var sc=0;S.ids.forEach(function(id){if(S.ans[id]===Q[id][3])sc++});S.sc=sc;view="result";draw()}
 function result(){
 var n=S.ids.length,p=pct(S.sc,n);
-A.innerHTML=nav()+'<div class="card"><h2>Session complete</h2><div class="big">'+S.sc+' / '+n+'</div><p class="mute">'+p+'% correct · '+(S.mode=="tutor"?"Tutor":"Test")+' mode</p><div class="bar"><i style="width:'+p+'%"></i></div><button class="primary" onclick="go(\'home\')">Back to practice</button></div><div class="card"><h2>Review</h2>'+S.ids.map(function(id,j){var q=Q[id],a=S.ans[id],ok=a===q[3];return '<details><summary>'+(j+1)+'. '+(ok?"Correct":"Incorrect")+' · '+q[0]+'</summary><p>'+q[1]+'</p><p><strong>Your answer:</strong> '+(a===undefined?"No answer":q[2][a])+'<br><strong>Correct answer:</strong> '+q[2][q[3]]+'</p><p class="mute">'+q[4]+'</p>'+dg(id,"stem")+dg(id,"exp")+'</details>'}).join("")+'</div>'}
+A.innerHTML=nav()+'<div class="card"><h2>Session complete</h2><div class="big">'+S.sc+' / '+n+'</div><p class="mute">'+p+'% correct · '+(S.exam?"Exam simulation"+(S.timeout?" · time ran out":""):(S.mode=="tutor"?"Tutor":"Test")+" mode")+'</p><div class="bar"><i style="width:'+p+'%"></i></div><button class="primary" onclick="go(\'home\')">Back to practice</button></div>'+topicTable()+'<div class="card"><h2>Review</h2>'+S.ids.map(function(id,j){var q=Q[id],a=S.ans[id],ok=a===q[3];return '<details><summary>'+(j+1)+'. '+(ok?"Correct":"Incorrect")+' · '+q[0]+'</summary><p>'+q[1]+'</p><p><strong>Your answer:</strong> '+(a===undefined?"No answer":q[2][a])+'<br><strong>Correct answer:</strong> '+q[2][q[3]]+'</p><p class="mute">'+q[4]+'</p>'+dg(id,"stem")+dg(id,"exp")+'</details>'}).join("")+'</div>'}
+function topicTable(){var by={};S.ids.forEach(function(id){var t=Q[id][0];by[t]=by[t]||{n:0,c:0};by[t].n++;if(S.ans[id]===Q[id][3])by[t].c++});var ks=Object.keys(by).sort(function(a,b){return by[a].c/by[a].n-by[b].c/by[b].n});return '<div class="card"><h2>Score by topic</h2><p class="mute" style="margin:0 0 6px">Weakest first.</p><table class="tp">'+ks.map(function(t){return '<tr><td>'+t+'</td><td>'+by[t].c+' / '+by[t].n+' · '+pct(by[t].c,by[t].n)+'%</td></tr>'}).join("")+'</table></div>'}
 function progress(){
 var tot=0,cor=0;Object.keys(D.stats).forEach(function(k){tot+=D.stats[k].a;cor+=D.stats[k].c});
 var rows=T.map(function(t){var a=0,c=0;Q.forEach(function(q,i){if(q[0]==t&&D.stats[i]){a+=D.stats[i].a;c+=D.stats[i].c}});var p=pct(c,a);return '<div class="trow"><div><span>'+t+'</span><span class="mute">'+(a?p+'% of '+a:"Not started")+'</span></div><div class="bar"><i style="width:'+p+'%"></i></div></div>'}).join("");
 var rd="",streak=0;for(var i=0;i<7;i++){var d=new Date();d.setDate(d.getDate()-i);var e=D.days[dkey(d)]||{a:0,c:0};rd+='<div class="trow"><div><span>'+(i==0?"Today":d.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"}))+'</span><span class="mute">'+(e.a?e.a+' answered · '+pct(e.c,e.a)+'% correct':"No practice")+'</span></div><div class="bar"><i style="width:'+Math.min(100,100*e.a/20)+'%"></i></div></div>'}
 for(var j=0;j<400;j++){var dd=new Date();dd.setDate(dd.getDate()-j);var ee=D.days[dkey(dd)];if(ee&&ee.a>0)streak++;else if(j>0)break}
-var ses=D.sessions.slice(-8).reverse().map(function(s){return '<div class="row" style="margin:6px 0"><span>'+new Date(s.d).toLocaleDateString()+' · '+(s.m=="tutor"?"Tutor":"Test")+(s.p&&s.p>s.n?" · partial":"")+'</span><strong>'+s.s+'/'+s.n+' ('+pct(s.s,s.n)+'%)</strong></div>'}).join("")||'<p class="mute">No sessions yet. Finish one to see it here.</p>';
+var ses=D.sessions.slice(-8).reverse().map(function(s){return '<div class="row" style="margin:6px 0"><span>'+new Date(s.d).toLocaleDateString()+' · '+(s.x?"Exam":s.m=="tutor"?"Tutor":"Test")+(s.p&&s.p>s.n?" · partial":"")+'</span><strong>'+s.s+'/'+s.n+' ('+pct(s.s,s.n)+'%)</strong></div>'}).join("")||'<p class="mute">No sessions yet. Finish one to see it here.</p>';
 A.innerHTML=nav()+'<div class="card"><h2>Overall</h2><div class="big">'+pct(cor,tot)+'%</div><p class="mute">'+cor+' correct of '+tot+' answered · '+D.sessions.length+' sessions</p></div><div class="card"><h2>Daily practice</h2><p class="mute">Goal: 20 questions a day · streak: '+streak+' day'+(streak==1?"":"s")+'</p>'+rd+'</div><div class="card"><h2>By topic</h2>'+rows+'</div><div class="card"><h2>Recent sessions</h2>'+ses+'</div>'+backupCard()+'<button class="ghost" onclick="reset()">'+(armed?"Tap again to erase all progress":"Reset progress")+'</button>'}
 function reset(){if(!armed){armed=true;draw();return}D={stats:{},flags:{},sessions:[],days:{}};save();armed=false;draw()}
 document.addEventListener("keydown",function(e){if(view!="quiz")return;if(e.key>="1"&&e.key<="4"){pick(+e.key-1)}else if(e.key=="Enter"){var b=document.getElementById("nx");if(b&&!b.disabled)next()}});
 draw();
-var APPV=4;
+var APPV=5;
 function checkUpdate(){if(!window.fetch)return;fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v>APPV&&view!="quiz"&&location.search.indexOf("v="+j.v)<0){location.replace(location.pathname+"?v="+j.v)}}).catch(function(){})}
 checkUpdate();
 document.addEventListener("visibilitychange",function(){if(!document.hidden)checkUpdate()});
