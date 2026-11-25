@@ -16,7 +16,7 @@ qs:[["Pulmonary vein Ar duration minus mitral A duration above what value sugges
 var IA={};
 function ipick(i,k){if(IA[i]!==undefined)return;IA[i]=k;var y=window.scrollY;images();window.scrollTo(0,y)}
 function images(){
-A.innerHTML=nav()+'<div class="card"><h2>Echo Image Bank</h2><p class="mute">'+EIMG.length+' de-identified images from your training scans, with '+EIMG.reduce(function(t,m){return t+m.qs.length},0)+' questions. Tap an answer to check yourself.</p></div>'+'<div id="mine"></div>'+EIMG.map(function(m,i){
+A.innerHTML=nav()+(window.labelCard?labelCard():'')+'<div class="card"><h2>Echo Image Bank</h2><p class="mute">'+EIMG.length+' de-identified images from your training scans, with '+EIMG.reduce(function(t,m){return t+m.qs.length},0)+' questions. Tap an answer to check yourself.</p></div>'+'<div id="mine"></div>'+EIMG.map(function(m,i){
 var qh=m.qs.map(function(q,j){var key=i+'-'+j,a=IA[key];
 var opts=q[1].map(function(o,k){var c="opt";if(a!==undefined){if(k==q[2])c+=" ok";else if(k==a)c+=" bad"}return '<button class="'+c+'" onclick="ipick(\''+key+'\','+k+')" '+(a!==undefined?"disabled":"")+'><b>'+"ABCD"[k]+'</b><span>'+o+'</span></button>'}).join("");
 var ex=a!==undefined?'<div class="exp '+(a==q[2]?"good":"miss")+'"><strong>'+(a==q[2]?"Correct.":"Incorrect.")+'</strong> '+q[3]+'</div>':"";
