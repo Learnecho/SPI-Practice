@@ -94,21 +94,22 @@ textarea{width:100%;margin-top:10px;padding:10px;border:1px solid var(--line);bo
 </header>
 <div id="app"></div>
 </main>
-<script src="questions.js?v=37"></script>
+<script src="questions.js?v=38"></script>
 <!-- Question files are append-only and must stay in this order: progress is stored by question index. Add new files at the end of this list. -->
-<script src="q/spi-doppler.js?v=37"></script>
-<script src="q/spi-transducers.js?v=37"></script>
-<script src="q/spi-waves.js?v=37"></script>
-<script src="q/spi-instrument.js?v=37"></script>
-<script src="q/spi-safety-qa.js?v=37"></script>
-<script src="q/ae-valves.js?v=37"></script>
-<script src="q/ae-cardiomyopathy.js?v=37"></script>
-<script src="bank.js?v=37"></script>
-<script src="echo-images.js?v=37"></script>
-<script src="labels.js?v=37"></script>
-<script src="anatomy.js?v=37"></script>
+<script src="q/spi-doppler.js?v=38"></script>
+<script src="q/spi-transducers.js?v=38"></script>
+<script src="q/spi-waves.js?v=38"></script>
+<script src="q/spi-instrument.js?v=38"></script>
+<script src="q/spi-safety-qa.js?v=38"></script>
+<script src="q/ae-valves.js?v=38"></script>
+<script src="q/ae-cardiomyopathy.js?v=38"></script>
+<script src="q/ae-care-contrast.js?v=38"></script>
+<script src="bank.js?v=38"></script>
+<script src="echo-images.js?v=38"></script>
+<script src="labels.js?v=38"></script>
+<script src="anatomy.js?v=38"></script>
 <script>
-var APPV=37;
+var APPV=38;
 var T=[];Q.forEach(function(q){if(T.indexOf(q[0])<0)T.push(q[0])});
 var KEY="spi_practice_v1",D={stats:{},flags:{},sessions:[],days:{}};
 try{var L=JSON.parse(localStorage.getItem(KEY));if(L&&L.stats)D=L}catch(e){}
@@ -151,7 +152,7 @@ ae:{name:"Adult Echo",full:"ARDMS Adult Echocardiography, content outline V24.2"
 ["Anatomy and physiology",15,["Anatomy","Physiology"]],
 ["Pathology",40,["Coronary & wall motion","Transplant & devices","Valve disease","Prosthetic valves","Endocarditis","Cardiomyopathy","Pericardial disease","Congenital","Masses","Aorta"]],
 ["Clinical care and safety",11,["Clinical care"]],
-["Measurements, maneuvers and views",25,["Echo views","Measurements"]],
+["Measurements, maneuvers and views",25,["Echo views","Measurements","Stress echo"]],
 ["Instrumentation, optimization and contrast",9,["Echo instrumentation","Contrast"]]]},
 rcs:{name:"CCI RCS",full:"CCI Registered Cardiac Sonographer, matrix for exams from July 1, 2023",n:170,sec:10800/170,target:2000,doms:[
 ["Preparing for the echo procedure",5,["Clinical care"]],
