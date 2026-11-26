@@ -1,0 +1,81 @@
+# Source for q/ae-path6.js: Pathology sixth batch (mixed facts and cases across pathology topics).
+VD="Valve disease"; CM="Cardiomyopathy"; CW="Coronary & wall motion"; PD="Pericardial disease"
+CG="Congenital"; MS="Masses"; AO="Aorta"; PH="Pulmonary hypertension"; IE="Endocarditis"
+PV="Prosthetic valves"; TD="Transplant & devices"
+Q=[
+# --- Valve disease ---
+(VD,"The most common cusp fusion pattern in a bicuspid aortic valve is:","Fusion of the right and left coronary cusps",["Right and noncoronary cusps","Left and noncoronary cusps","No fusion"],"Right–noncoronary fusion is the second most common type.","C"),
+(VD,"A raphe in a bicuspid aortic valve is:","A ridge where two cusps failed to separate",["A vegetation","A tumor","A tear"],"It can make a bicuspid valve look tricuspid in diastole.","F"),
+(VD,"Severe AS with severe MR at the same time can make the AS look less severe because:","Forward stroke volume is reduced, lowering the AS gradient",["MR raises the gradient","AS cures the MR","Both cancel out completely"],"Use the valve area and DVI rather than gradient alone.","C"),
+(VD,"Moderate AS plus moderate AR together may cause:","Hemodynamic effects similar to severe disease",["No effect","Only mild symptoms always","Mitral stenosis"],"Mixed valve disease should be judged as a whole.","C"),
+(VD,"Aortic regurgitation in acute type A dissection can be caused by:","The flap prolapsing through the valve or loss of cusp support",["Mitral prolapse","Rheumatic fusion","Coarctation"],"Some patients can have their valve repaired at surgery.","C"),
+(VD,"A perforation of the anterior mitral leaflet on color Doppler shows:","A regurgitant jet passing through the body of the leaflet, not at the coaptation line",["A jet at the coaptation line","No jet","A diastolic jet only"],"It is usually caused by endocarditis.","F"),
+(VD,"In obstructive HCM, MR is mainly caused by:","Systolic anterior motion pulling the anterior leaflet away from coaptation",["Rheumatic fusion","Annular calcification","Endocarditis"],"Relieving obstruction often reduces the MR.","F"),
+(VD,"An elderly hypertensive patient has a localized bulge of the basal septum into the LVOT with a normal rest of the LV. This is called:","A sigmoid (basal) septum",["HCM always","A VSD","A myxoma"],"It can sometimes cause mild LVOT gradients.","F"),
+(VD,"Congenital mitral stenosis can occur with:","A supramitral ring, parachute mitral valve or Shone complex",["Rheumatic fever only","Ankylosing spondylitis","Kawasaki disease"],"It usually presents in childhood.","C"),
+(VD,"A double-orifice mitral valve is often associated with:","AV canal defects",["Bicuspid aortic valve only","Coarctation only","Marfan syndrome"],"It is seen as two separate openings on PSAX.","C"),
+(VD,"Rheumatic tricuspid disease typically appears with:","Rheumatic mitral (and often aortic) disease",["Isolated tricuspid involvement only","Bicuspid aortic valve","Ebstein anomaly"],"Look for commissural fusion and doming of the tricuspid leaflets.","F"),
+# --- Cardiomyopathy ---
+(CM,"Heart failure is classified as HFrEF when the EF is:","40% or less",["50% or more","41% to 49%","Over 70%"],"41–49% is mildly reduced EF; 50% or more is preserved EF.","F"),
+(CM,"Heart failure with improved EF (HFimpEF) means:","An EF that was 40% or less and has risen above 40% on follow-up",["An EF that never changed","A new diagnosis","EF over 70%"],"Continued treatment is still needed.","C"),
+(CM,"After an MI, an ICD to prevent sudden death is usually considered if the EF stays at:","35% or less after optimal therapy",["60% or less","50% or more","Over 70%"],"Reassess EF after about 40 days to 3 months.","F"),
+(CM,"Alcohol septal ablation for obstructive HCM commonly causes:","Right bundle branch block, and sometimes complete heart block",["Left bundle branch block always","Aortic stenosis","Mitral stenosis"],"Echo with contrast helps choose the right septal branch.","C"),
+(CM,"Atrial fibrillation in HCM is important because it:","Greatly raises stroke risk, so anticoagulation is usually recommended",["Is harmless","Improves filling","Cures the obstruction"],"Loss of atrial kick also worsens symptoms.","F"),
+(CM,"A patient with cardiac amyloidosis and atrial standstill or AF has a high risk of:","LA appendage thrombus",["Aortic dissection","Coarctation","Mitral prolapse"],"Thrombus can form even in sinus rhythm because the atria barely contract.","C"),
+(CM,"MINOCA means:","Myocardial infarction with non-obstructive coronary arteries",["A type of congenital disease","A valve infection","An aortic tear"],"Causes include spasm, SCAD, myocarditis and Takotsubo.","C"),
+(CM,"Restrictive cardiomyopathy in children is:","Rare and carries a poor prognosis",["Common and benign","Always reversible","The same as HCM"],"Very large atria with normal-sized ventricles are typical.","C"),
+(CM,"First-degree relatives of an HCM patient should have screening echo:","Repeated over time, because HCM may appear later in life",["Only once at birth","Never","Only if they have symptoms"],"Intervals depend on age and genetic results.","F"),
+# --- Coronary ---
+(CW,"After a large anterior MI, LV remodeling over months typically causes:","LV dilation, more spherical shape and lower EF",["LV shrinking","Normal shape","Thicker walls everywhere"],"Medicines such as ACE inhibitors reduce remodeling.","F"),
+(CW,"Tricuspid regurgitation after an RV infarct is often caused by:","RV dilation and papillary muscle dysfunction",["Rheumatic disease","Carcinoid","Lead damage"],"It usually improves if the RV recovers.","C"),
+(CW,"An LV aneurysm after MI raises the risk of:","Thrombus, ventricular arrhythmias and heart failure",["Coarctation","Mitral stenosis","Aortic stenosis"],"Surgical repair is sometimes needed.","F"),
+(CW,"A chronic total occlusion (CTO) of a coronary artery with normal wall motion in its territory suggests:","Well-developed collateral circulation",["Acute MI","Normal coronary flow","Pericarditis"],"Collaterals can keep muscle alive.","C"),
+(CW,"A coronary artery running between the aorta and pulmonary artery (interarterial course) is dangerous because:","It may be squeezed during exercise, causing sudden death",["It causes valve disease","It is always harmless","It causes pericarditis"],"It is an important cause of sudden death in young athletes.","F"),
+(CW,"Pericarditis a few days after a large transmural MI (early post-MI pericarditis) is:","Inflammation over the infarct, usually short-lived",["A sign of coronary dissection","Always tamponade","Dressler syndrome"],"Dressler syndrome occurs weeks later.","F"),
+(CW,"A large MI with a new pericardial effusion containing echogenic clot raises concern for:","Contained or impending free wall rupture",["Normal recovery","Viral pericarditis","Hypothyroid effusion"],"Notify the physician immediately.","F"),
+# --- Pericardial ---
+(PD,"A pericardial window is:","A surgical opening in the pericardium to drain fluid into the chest or abdomen",["A view on echo","A congenital defect","A type of effusion"],"It is used for recurrent effusions.","F"),
+(PD,"A new pericardial effusion during an AF ablation procedure most likely means:","Cardiac perforation, which can cause tamponade quickly",["Normal finding","Pleural effusion","Pericarditis from weeks before"],"Echo is used to monitor during the procedure.","F"),
+(PD,"In patients with heart failure, a small pericardial effusion is:","Common and usually related to raised venous pressure",["Always malignant","Always tamponade","Never seen"],"It usually improves with treatment of the heart failure.","F"),
+(PD,"Recurrent large effusions in a patient with lung cancer are most likely:","Malignant effusions",["Viral pericarditis","Normal finding","Dressler syndrome"],"A pericardial window may be needed.","F"),
+(PD,"Pericardiocentesis is usually performed with the needle aimed toward the:","Largest fluid collection, closest to the skin, avoiding vital structures",["Aortic arch","LV apex in all cases","Pulmonary veins"],"Echo shows the best entry point and depth.","F"),
+(PD,"Pericardial effusion in a patient on dialysis that does not improve with more dialysis may need:","Drainage",["Antibiotics only","Valve replacement","A pacemaker"],"Large uremic effusions can cause tamponade.","F"),
+# --- Congenital ---
+(CG,"A calcified PDA in an older adult may need:","Device or surgical closure if it is causing volume overload or PH",["No treatment ever","Valve replacement","A pacemaker"],"Calcification makes surgery more difficult.","C"),
+(CG,"Atrial fibrillation in an older adult with an undiagnosed ASD is:","A common presentation because of long-standing RA and LA enlargement",["Rare","Not linked","A sign of coarctation"],"Look carefully at the atrial septum in new AF with a large RV.","F"),
+(CG,"A supramitral ring is:","A ridge of tissue on the LA side of the mitral valve causing obstruction",["A VSD","A coronary anomaly","A tumor"],"It is part of Shone complex.","C"),
+(CG,"Patients with Williams syndrome may also have:","Supravalvular aortic stenosis and branch pulmonary stenosis",["Mitral stenosis","Ebstein anomaly","Coarctation only"],"They often have a friendly personality and an 'elfin' face.","C"),
+(CG,"In an adult with an unrepaired VSD and Eisenmenger physiology, echo shows:","Low-velocity or bidirectional shunt flow with severe PH and RV hypertrophy",["High-velocity left-to-right flow","Normal pressures","Only mitral stenosis"],"The shunt reverses as PVR rises.","F"),
+(CG,"A cleft mitral leaflet in a primum ASD on PSAX points toward the:","Ventricular septum",["Lateral wall","Aortic valve","Pulmonary vein"],"An isolated cleft often points toward the LVOT instead.","C"),
+(CG,"In ccTGA, the morphologic RV sits on the:","Left side, pumping into the aorta",["Right side, pumping to the lungs","Midline","It is absent"],"The tricuspid valve stays with the morphologic RV.","C"),
+(CG,"In a child, a large left-to-right VSD that is not closed may eventually lead to:","Pulmonary vascular disease and Eisenmenger syndrome",["Mitral stenosis","Coarctation","Aortic stenosis"],"Timely closure prevents this.","F"),
+# --- Masses ---
+(MS,"A thrombus at the tip of a central venous catheter in the RA appears as:","A mobile mass attached to the catheter tip",["A mass on the mitral valve","A mass in the LV apex","A normal finding"],"Report it so treatment can be considered.","F"),
+(MS,"About what share of primary cardiac tumors are benign?","About three-quarters",["About 10%","Almost none","All"],"Myxoma is the most common benign tumor in adults.","F"),
+(MS,"A thick, frond-like, mobile mass on an aortic valve in a patient with fever and positive cultures is most likely:","A vegetation",["Fibroelastoma","Myxoma","Lambl's excrescence"],"Clinical findings are key to telling vegetations from tumors.","F"),
+(MS,"Masses on the right side of the heart that grow from the IVC most often come from:","Kidney, liver or uterine tumors",["Brain tumors","Skin cancer only","Thyroid tumors"],"Check the IVC from the subcostal view.","F"),
+(MS,"A large mass inside the LV myocardium in a child, not moving and with calcium, is most likely a:","Fibroma",["Myxoma","Rhabdomyoma that is shrinking","Fibroelastoma"],"Fibromas can cause arrhythmias and do not regress.","C"),
+# --- Aorta ---
+(AO,"Aortic dissection in pregnancy is more likely in women with:","Marfan syndrome or other connective tissue disease",["Normal aortas","Mild MR","Hypothyroidism"],"Women with Marfan need aortic imaging before and during pregnancy.","F"),
+(AO,"An average ascending aortic aneurysm grows about:","1 to 2 mm per year",["1 cm per month","10 cm per year","Never grows"],"Faster growth may be a reason for earlier surgery.","C"),
+(AO,"Ultrasound screening for abdominal aortic aneurysm is commonly recommended for:","Men aged 65 to 75 who have ever smoked",["All children","Women under 30","Everyone every year"],"Screening detects aneurysms before rupture.","F"),
+(AO,"Rupture of a sinus of Valsalva aneurysm into the RA or RV causes:","A sudden continuous murmur and heart failure",["Mitral stenosis","Coarctation","Atrial fibrillation only"],"Color shows continuous flow into the right heart.","F"),
+(AO,"An aortic intramural hematoma can progress to:","Classic dissection or rupture",["Normal aorta always","Coarctation","Mitral stenosis"],"Type A hematomas are usually treated surgically.","F"),
+(AO,"In coarctation, the descending aorta flow pattern below the narrowing typically shows:","Reduced, delayed systolic flow with continued flow in diastole",["Normal triphasic flow","No flow","Reversed flow only"],"This is similar to tardus parvus.","F"),
+# --- PH ---
+(PH,"Combined pre- and post-capillary PH is suggested when:","Wedge pressure is over 15 mmHg and PVR is over 2 Wood units",["Wedge pressure is normal","PVR is normal","PA pressure is normal"],"It is common in long-standing left heart disease.","C"),
+(PH,"Pulmonary hypertension due to severe MS often:","Improves after successful mitral valve treatment",["Never changes","Always worsens","Has no link to the valve"],"Persistent PH after treatment suggests vascular remodeling.","F"),
+(PH,"Pulmonary veno-occlusive disease is a rare cause of PAH in which:","The small pulmonary veins are blocked, and PAH drugs can cause pulmonary edema",["The aorta is blocked","The mitral valve is stenotic","The coronary arteries are blocked"],"Lung transplant may be needed.","C"),
+(PH,"In patients with large left-to-right shunts, early PH is mainly due to:","High pulmonary blood flow",["High PVR from the start","Left heart failure","Lung disease"],"Over time, vessel damage raises PVR.","F"),
+(PH,"An RV that is dilated with a low TAPSE and a large RA in PAH means:","RV failure and poorer prognosis",["Normal RV","Mild disease","LV failure"],"Treatment may need to be escalated.","F"),
+# --- Endocarditis, prosthetic, devices ---
+(IE,"Endocarditis on a bicuspid aortic valve is a concern because bicuspid valves:","Have a higher risk of infection than normal valves",["Never get infected","Are always prosthetic","Have no blood flow"],"Root abscess is more common in bicuspid valve IE.","C"),
+(IE,"A patient with a prosthetic valve and fever should have blood cultures drawn:","Before antibiotics are started",["After a week of antibiotics","Never","Only after surgery"],"Cultures guide the right treatment.","F"),
+(IE,"Septic emboli from left-sided endocarditis often go to the:","Brain, spleen and kidneys",["Lungs only","Skin only","Liver only"],"Neurological symptoms need urgent imaging.","F"),
+(PV,"A new paravalvular leak months after surgery in a patient with fever suggests:","Prosthetic valve endocarditis with ring abscess",["Normal finding","Mismatch","Normal washing jets"],"TEE is needed.","F"),
+(PV,"A mechanical aortic valve with normal disc motion but a high gradient and normal DVI in a patient with fever and anemia may reflect:","High flow (for example from anemia), not obstruction",["Valve thrombosis","Pannus","Mismatch always"],"High flow raises gradients across normal valves.","C"),
+(PV,"Hemolysis after mitral valve repair or replacement is often linked to:","A paravalvular leak or a jet striking a ring or device",["Normal function","Pericarditis","Aortic stenosis"],"Labs show high LDH and low haptoglobin.","C"),
+(TD,"A patient with an LVAD and dark urine, high LDH and rising pump power may have:","Pump thrombosis",["Normal function","Pericarditis","Mitral stenosis"],"Echo ramp studies help confirm it.","C"),
+(TD,"An LVAD patient develops a dilated RV, a small LV and septum bowed toward the LV with low flow. The cause may be:","Right ventricular failure",["Too low pump speed","Aortic stenosis","Normal finding"],"RV failure is a common LVAD problem.","C"),
+(TD,"After heart transplant, a patient has new LV wall motion abnormalities on dobutamine stress echo. This suggests:","Cardiac allograft vasculopathy",["Normal function","Rejection only","Pericarditis"],"Further testing with angiography may be needed.","C"),
+]
