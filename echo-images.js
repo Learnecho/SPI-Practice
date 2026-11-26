@@ -22,7 +22,7 @@ A.innerHTML=nav()+(window.anatomyCard?anatomyCard():'')+(window.labelCard?labelC
 '<div class="card"><h2>Echo Image Library</h2><p class="mute" style="margin:0">'+EIMG.length+' images · '+nN+' normal · '+nA+' abnormal · '+EIMG.reduce(function(t,m){return t+m.qs.length},0)+' questions</p>'+
 '<div class="seg">'+["All","Normal","Abnormal"].map(function(c){return '<button class="'+(BK.cat==c?"on":"")+'" onclick="bkSet(\'cat\',\''+c+'\')">'+c+'</button>'}).join("")+'</div>'+
 sel("view","View",bkVals("view"))+sel("dx","Diagnosis",bkVals("dx"))+
-'<button class="primary" '+(L.length?"":"disabled")+' onclick="bkQuizStart()">Image quiz · '+Math.min(10,L.length)+' images</button></div>'+
+'<button class="primary" '+(bkQuizList().length?"":"disabled")+' onclick="bkQuizStart()">Image quiz · '+Math.min(10,bkQuizList().length)+' images</button></div>'+
 (L.length?'<div class="grid">'+L.map(function(i){var m=EIMG[i];return '<button class="tile" onclick="bkOpen('+i+')"><img src="'+(m.th||m.src)+'" alt="'+escA(m.title)+'" loading="lazy"><span><strong>'+escA(m.view)+'</strong> · '+(m.cat=="abnormal"?escA(m.dx):"Normal")+'</span></button>'}).join("")+'</div>':'<div class="card"><p class="mute">No images match these filters yet.</p></div>')+
 '<div id="mine"></div>';loadMine()}
 function bkDetail(){var L=bkList(),i=BK.i,m=EIMG[i],p=L.indexOf(i);
@@ -32,7 +32,8 @@ A.innerHTML=nav()+'<div class="card"><div class="row" style="margin:0 0 10px"><b
 '<ul style="padding-left:20px">'+m.notes.map(function(n){return '<li style="margin-bottom:6px">'+n+'</li>'}).join("")+'</ul>'+
 m.qs.map(function(q,j){return qBlock(q,i+'-'+j)}).join("")+'</div>'}
 function pick3(pool,not){return shuffle(pool.filter(function(x){return x!=not})).slice(0,3)}
-function bkQuizStart(){var L=shuffle(bkList()).slice(0,10),dxs=bkVals("dx").concat(DXPOOL).filter(function(v,i,a){return a.indexOf(v)==i});
+function bkQuizList(){return bkList().filter(function(i){return !EIMG[i].noquiz})}
+function bkQuizStart(){var L=shuffle(bkQuizList()).slice(0,10),dxs=bkVals("dx").concat(DXPOOL).filter(function(v,i,a){return a.indexOf(v)==i});
 BK.q={i:0,sc:0,a:null,items:L.map(function(i){var m=EIMG[i],asDx=m.cat=="abnormal"&&Math.random()<0.7,right=asDx?m.dx:m.view,opts=shuffle([right].concat(pick3(asDx?dxs:VIEWS,right)));return{i:i,t:asDx?"What is the main finding?":"Which view is this?",o:opts,r:opts.indexOf(right)}})};BK.mode="quiz";draw()}
 function bkAns(k){var q=BK.q;if(q.a!==null)return;q.a=k;if(k==q.items[q.i].r)q.sc++;images()}
 function bkNext(){var q=BK.q;q.i++;q.a=null;draw()}

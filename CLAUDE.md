@@ -13,7 +13,7 @@ Without this, the owner's phone keeps showing the old version.
 
 ## Image library
 Goal: ~100 normal and 300+ abnormal echo images.
-- Data: `bank.js` (EIMG array; `IMG` is already used by questions.js for diagrams). Fields: src, th, view (PLAX, PSAX, A4C, A5C, A2C, A3C, Subcostal, Suprasternal), cat ("normal"/"abnormal"), dx ("Normal" or the confirmed diagnosis), credit (source and permission), title, tag, notes[], qs[].
+- Data: `bank.js` (EIMG array; `IMG` is already used by questions.js for diagrams). Fields: src, th, view (PLAX, PSAX, A4C, A5C, A2C, A3C, Subcostal, Suprasternal), cat ("normal"/"abnormal"), noquiz (1 = leave out of the "Which view?" image quiz, e.g. spectral Doppler or M-mode), dx ("Normal" or the confirmed diagnosis), credit (source and permission), title, tag, notes[], qs[].
 - Logic: `echo-images.js` (gallery with filters, detail view, image quiz, plus on-device "My images").
 - Add images with `tools/add_image.py SOURCE echoN --crop TOP BOTTOM LEFT RIGHT`, which writes the full image and a thumbnail and strips EXIF.
 - Only de-identified images: crop off names, dates, MRNs, hospital/college labels.
