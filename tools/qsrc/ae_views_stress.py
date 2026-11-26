@@ -51,11 +51,11 @@ Q=[
 (V,"In the suprasternal notch view, which vessels branch from the aortic arch?","Brachiocephalic, left common carotid and left subclavian arteries",["Coronary arteries","Pulmonary veins","Renal arteries"],"The right pulmonary artery is seen beneath the arch in cross section.","F"),
 # --- Measurements: calculations ---
 (M,"The aortic root at the sinuses of Valsalva is measured by ASE convention:","At end-diastole, leading edge to leading edge",["At end-systole, inner edge to inner edge","Only on M-mode","At the annulus"],"The annulus is measured in mid-systole, inner edge to inner edge.","C"),
-(M,"Qp/Qs is calculated as:","Pulmonic stroke volume ÷ systemic stroke volume",["Systemic ÷ pulmonic","LVOT VTI × heart rate","EF ÷ LV mass"],"Qp/Qs over 1.5 suggests a significant left-to-right shunt.","F"),
+(M,"The shunt ratio Qp/Qs compares:","Pulmonic stroke volume ÷ systemic stroke volume",["Systemic ÷ pulmonic","LVOT VTI × heart rate","EF ÷ LV mass"],"Qp/Qs over 1.5 suggests a significant left-to-right shunt.","F"),
 (M,"RVOT diameter 2.5 cm, RVOT VTI 20 cm, LVOT diameter 2.0 cm, LVOT VTI 20 cm. Qp/Qs is about:","1.56",["1.0","1.25","2.5"],"Equal VTIs mean the ratio equals (2.5 ÷ 2.0)² = 1.5625.","C"),
 (M,"LV dP/dt from the MR CW jet uses the time for velocity to rise from:","1 m/s to 3 m/s",["0 to 1 m/s","3 m/s to 5 m/s","1 m/s to 2 m/s"],"The pressure change between these points is 32 mmHg.","C"),
 (M,"The MR jet takes 32 ms to rise from 1 to 3 m/s. dP/dt is:","1,000 mmHg/s",["32 mmHg/s","3,200 mmHg/s","100 mmHg/s"],"32 mmHg ÷ 0.032 s = 1,000 mmHg/s, which is reduced (normal over 1,200).","C"),
-(M,"The myocardial performance (Tei) index is calculated as:","(Isovolumic contraction time + isovolumic relaxation time) ÷ ejection time",["Ejection time ÷ IVRT","E ÷ A","EF × heart rate"],"A higher value means worse combined systolic and diastolic function.","C"),
+(M,"Which formula gives the myocardial performance (Tei) index?","(Isovolumic contraction time + isovolumic relaxation time) ÷ ejection time",["Ejection time ÷ IVRT","E ÷ A","EF × heart rate"],"A higher value means worse combined systolic and diastolic function.","C"),
 (M,"Systolic BP 110 mmHg and MR peak velocity 5 m/s. Estimated LA systolic pressure is:","10 mmHg",["100 mmHg","35 mmHg","0 mmHg"],"LAP = SBP − 4V² = 110 − 100 = 10 mmHg (assuming no LVOT obstruction or AS).","C"),
 (M,"Diastolic BP 70 mmHg and AR end-diastolic velocity 4 m/s. Estimated LVEDP is:","6 mmHg",["64 mmHg","16 mmHg","70 mmHg"],"LVEDP = DBP − 4V² = 70 − 64 = 6 mmHg.","C"),
 (M,"Systolic BP 120 mmHg and a VSD jet of 4.5 m/s. Estimated RV systolic pressure is:","39 mmHg",["81 mmHg","120 mmHg","20 mmHg"],"RVSP = SBP − 4V² = 120 − 81 = 39 mmHg.","C"),
