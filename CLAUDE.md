@@ -6,7 +6,7 @@ Static web app served by GitHub Pages and installed on the owner's iPhone Home S
 The app checks `version.json` when it opens and reloads itself if a newer version exists.
 For any change to index.html, questions.js, q/*.js, bank.js, echo-images.js, labels.js or anatomy.js:
 1. Increase `v` in `version.json` by 1.
-2. Set `var APPV=` in index.html to the same number.
+2. Set `var APPV=` (top of the main inline script) in index.html to the same number.
 3. Set the `?v=` on the script tags in index.html to the same number.
 
 Without this, the owner's phone keeps showing the old version.
