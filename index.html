@@ -84,6 +84,8 @@ summary{cursor:pointer}
 input[type=text]{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:16px/1.4 -apple-system,sans-serif;margin-top:8px}
 table.tp{width:100%;border-collapse:collapse;font-size:14px}table.tp td{padding:6px 0;border-top:1px solid var(--line)}table.tp td:last-child{text-align:right;white-space:nowrap}
 textarea{width:100%;margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:13px/1.4 ui-monospace,Menlo,monospace}
+.tuitem{display:block;width:100%;text-align:left;margin:0 0 8px}.tuitem b{display:block}.tuitem .mute{display:block;margin-top:2px}.tuh{font-size:15px;margin:16px 0 6px;color:var(--accent)}.tul{margin:0;padding-left:22px}.tul li{margin-bottom:6px}.tut{width:100%;border-collapse:collapse;font-size:14px}.tut td{border-top:1px solid var(--line);padding:6px 4px;vertical-align:top}.tut td:last-child{font-weight:600;text-align:right}.tuin{display:block;font-size:14px;margin:6px 0}.tuin input{display:block;width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;margin-top:4px}
+nav button{padding:10px 4px}
 </style>
 </head>
 <body>
@@ -94,55 +96,56 @@ textarea{width:100%;margin-top:10px;padding:10px;border:1px solid var(--line);bo
 </header>
 <div id="app"></div>
 </main>
-<script src="questions.js?v=71"></script>
+<script src="questions.js?v=72"></script>
 <!-- Question files are append-only and must stay in this order: progress is stored by question index. Add new files at the end of this list. -->
-<script src="q/spi-doppler.js?v=71"></script>
-<script src="q/spi-transducers.js?v=71"></script>
-<script src="q/spi-waves.js?v=71"></script>
-<script src="q/spi-instrument.js?v=71"></script>
-<script src="q/spi-safety-qa.js?v=71"></script>
-<script src="q/ae-valves.js?v=71"></script>
-<script src="q/ae-cardiomyopathy.js?v=71"></script>
-<script src="q/ae-care-contrast.js?v=71"></script>
-<script src="q/ae-peri-aorta-mass.js?v=71"></script>
-<script src="q/ae-chd-ph.js?v=71"></script>
-<script src="q/ae-anatomy-views.js?v=71"></script>
-<script src="q/spi-doppler2.js?v=71"></script>
-<script src="q/spi-optimize.js?v=71"></script>
-<script src="q/ae-measure.js?v=71"></script>
-<script src="q/ae-care2.js?v=71"></script>
-<script src="q/ae-instr-contrast2.js?v=71"></script>
-<script src="q/spi-qa2.js?v=71"></script>
-<script src="q/ae-anatphys2.js?v=71"></script>
-<script src="q/spi-doppler3.js?v=71"></script>
-<script src="q/ae-coronary-devices.js?v=71"></script>
-<script src="q/ae-views-stress.js?v=71"></script>
-<script src="q/ae-cm-peri-mass2.js?v=71"></script>
-<script src="q/ae-valve-aorta-ph2.js?v=71"></script>
-<script src="q/ae-views-measure2.js?v=71"></script>
-<script src="q/ae-chd-ie-prost.js?v=71"></script>
-<script src="q/ae-anatphys3.js?v=71"></script>
-<script src="q/ae-care3.js?v=71"></script>
-<script src="q/ae-cases.js?v=71"></script>
-<script src="q/ae-calc-views3.js?v=71"></script>
-<script src="q/ae-instr-contrast3.js?v=71"></script>
-<script src="q/spi-optimize3.js?v=71"></script>
-<script src="q/ae-path5.js?v=71"></script>
-<script src="q/ae-views-measure4.js?v=71"></script>
-<script src="q/ae-anatphys4.js?v=71"></script>
-<script src="q/ae-path6.js?v=71"></script>
-<script src="q/spi-doppler4.js?v=71"></script>
-<script src="q/ae-views-measure5.js?v=71"></script>
-<script src="q/ae-care4.js?v=71"></script>
-<script src="q/spi-optimize4.js?v=71"></script>
-<script src="q/ae-mix-final.js?v=71"></script>
-<script src="q/final-fill.js?v=71"></script>
-<script src="bank.js?v=71"></script>
-<script src="echo-images.js?v=71"></script>
-<script src="labels.js?v=71"></script>
-<script src="anatomy.js?v=71"></script>
+<script src="q/spi-doppler.js?v=72"></script>
+<script src="q/spi-transducers.js?v=72"></script>
+<script src="q/spi-waves.js?v=72"></script>
+<script src="q/spi-instrument.js?v=72"></script>
+<script src="q/spi-safety-qa.js?v=72"></script>
+<script src="q/ae-valves.js?v=72"></script>
+<script src="q/ae-cardiomyopathy.js?v=72"></script>
+<script src="q/ae-care-contrast.js?v=72"></script>
+<script src="q/ae-peri-aorta-mass.js?v=72"></script>
+<script src="q/ae-chd-ph.js?v=72"></script>
+<script src="q/ae-anatomy-views.js?v=72"></script>
+<script src="q/spi-doppler2.js?v=72"></script>
+<script src="q/spi-optimize.js?v=72"></script>
+<script src="q/ae-measure.js?v=72"></script>
+<script src="q/ae-care2.js?v=72"></script>
+<script src="q/ae-instr-contrast2.js?v=72"></script>
+<script src="q/spi-qa2.js?v=72"></script>
+<script src="q/ae-anatphys2.js?v=72"></script>
+<script src="q/spi-doppler3.js?v=72"></script>
+<script src="q/ae-coronary-devices.js?v=72"></script>
+<script src="q/ae-views-stress.js?v=72"></script>
+<script src="q/ae-cm-peri-mass2.js?v=72"></script>
+<script src="q/ae-valve-aorta-ph2.js?v=72"></script>
+<script src="q/ae-views-measure2.js?v=72"></script>
+<script src="q/ae-chd-ie-prost.js?v=72"></script>
+<script src="q/ae-anatphys3.js?v=72"></script>
+<script src="q/ae-care3.js?v=72"></script>
+<script src="q/ae-cases.js?v=72"></script>
+<script src="q/ae-calc-views3.js?v=72"></script>
+<script src="q/ae-instr-contrast3.js?v=72"></script>
+<script src="q/spi-optimize3.js?v=72"></script>
+<script src="q/ae-path5.js?v=72"></script>
+<script src="q/ae-views-measure4.js?v=72"></script>
+<script src="q/ae-anatphys4.js?v=72"></script>
+<script src="q/ae-path6.js?v=72"></script>
+<script src="q/spi-doppler4.js?v=72"></script>
+<script src="q/ae-views-measure5.js?v=72"></script>
+<script src="q/ae-care4.js?v=72"></script>
+<script src="q/spi-optimize4.js?v=72"></script>
+<script src="q/ae-mix-final.js?v=72"></script>
+<script src="q/final-fill.js?v=72"></script>
+<script src="bank.js?v=72"></script>
+<script src="echo-images.js?v=72"></script>
+<script src="labels.js?v=72"></script>
+<script src="anatomy.js?v=72"></script>
+<script src="tutorials.js?v=72"></script>
 <script>
-var APPV=71;
+var APPV=72;
 var T=[];Q.forEach(function(q){if(T.indexOf(q[0])<0)T.push(q[0])});
 var KEY="spi_practice_v1",D={stats:{},flags:{},sessions:[],days:{}};
 try{var L=JSON.parse(localStorage.getItem(KEY));if(L&&L.stats)D=L}catch(e){}
@@ -169,9 +172,9 @@ function logSession(){var n=0,sc=0;S.ids.forEach(function(id){if(S.ans[id]!==und
 function commitTest(){if(S.mode=="test"&&!S.committed){S.committed=1;S.ids.forEach(function(id){if(S.ans[id]!==undefined)rec(id,S.ans[id]===Q[id][3])})}}
 function pct(c,a){return a?Math.round(100*c/a):0}
 function ids(f){var r=[];Q.forEach(function(q,i){if(f(q,i))r.push(i)});return r}
-function nav(){var p=view=="progress",im=view=="images"||view=="label"||view=="anatomy";return '<nav><button class="'+(p||im?"":"on")+'" onclick="go(\'home\')">Practice</button><button class="'+(im?"on":"")+'" onclick="if(window.BK)BK.mode=\'grid\';go(\'images\')">Images</button><button class="'+(p?"on":"")+'" onclick="go(\'progress\')">Progress</button></nav>'}
+function nav(){var p=view=="progress",im=view=="images"||view=="label"||view=="anatomy",tu=view=="tutor";return '<nav><button class="'+(p||im||tu?"":"on")+'" onclick="go(\'home\')">Practice</button><button class="'+(tu?"on":"")+'" onclick="if(window.tuId!==undefined)tuId=null;go(\'tutor\')">Learn</button><button class="'+(im?"on":"")+'" onclick="if(window.BK)BK.mode=\'grid\';go(\'images\')">Images</button><button class="'+(p?"on":"")+'" onclick="go(\'progress\')">Progress</button></nav>'}
 function go(v){if(view=="quiz"&&S){stopT();commitTest();logSession()}view=v;armed=false;draw()}
-function draw(){window.scrollTo(0,0);({home:home,quiz:quiz,result:result,progress:progress,images:images,label:label,anatomy:anatomy})[view]();if(view=="home")srchUpd()}
+function draw(){window.scrollTo(0,0);({home:home,quiz:quiz,result:result,progress:progress,images:images,label:label,anatomy:anatomy,tutor:tutor})[view]();if(view=="home")srchUpd()}
 function start(list,o){if(!list.length)return;o=o||{};stopT();S={ids:o.keep?list:shuffle(list),i:0,mode:o.mode||mode,ans:{},sid:Date.now(),exam:!!o.secs};if(o.secs){S.end=Date.now()+o.secs*1000;tick=setInterval(tickT,1000)}view="quiz";draw()}
 function daily(){var left=Math.max(0,20-todayA());if(!left)left=20;var d=shuffle(ids(function(q,i){return due(i)})),n=shuffle(ids(function(q,i){return !D.stats[i]})),r=shuffle(ids(function(q,i){return D.stats[i]&&!due(i)})),out=d.slice(0,Math.ceil(left*0.6));n.concat(d.slice(out.length),r).forEach(function(i){if(out.length<left&&out.indexOf(i)<0)out.push(i)});start(shuffle(out),{keep:1,mode:"tutor"})}
 // Exam blueprints: ARDMS content outlines (SPI V24.1, AE V24.2). Each domain: [name, percent, topics in this bank].
