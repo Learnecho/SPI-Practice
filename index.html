@@ -94,11 +94,13 @@ textarea{width:100%;margin-top:10px;padding:10px;border:1px solid var(--line);bo
 </header>
 <div id="app"></div>
 </main>
-<script src="questions.js?v=26"></script>
-<script src="bank.js?v=26"></script>
-<script src="echo-images.js?v=26"></script>
-<script src="labels.js?v=26"></script>
-<script src="anatomy.js?v=26"></script>
+<script src="questions.js?v=27"></script>
+<!-- Question files are append-only and must stay in this order: progress is stored by question index. Add new files at the end of this list. -->
+<script src="q/spi-doppler.js?v=27"></script>
+<script src="bank.js?v=27"></script>
+<script src="echo-images.js?v=27"></script>
+<script src="labels.js?v=27"></script>
+<script src="anatomy.js?v=27"></script>
 <script>
 var T=[];Q.forEach(function(q){if(T.indexOf(q[0])<0)T.push(q[0])});
 var KEY="spi_practice_v1",D={stats:{},flags:{},sessions:[],days:{}};
@@ -111,7 +113,9 @@ function esc(t){return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g
 function showBk(m){bk=(bk==m?"":m);bm="";progress()}
 function doRestore(){var t=document.getElementById("rt").value;try{var R=JSON.parse(t);if(!R||!R.stats)throw 0;D=R;D.days=D.days||{};D.sessions=D.sessions||[];D.flags=D.flags||{};save();bk="";bm="Backup restored.";progress()}catch(e){bm="That text is not a valid backup.";progress()}}
 function backupCard(){return '<div class="card"><h2>Backup</h2><p class="mute">Your progress is saved on this phone. Show a backup now and then and keep it in Notes.</p><div class="row"><button class="ghost" onclick="showBk(\'show\')">Show backup</button><button class="ghost" onclick="showBk(\'restore\')">Restore</button></div>'+(bm?'<p>'+bm+'</p>':"")+(bk=="show"?'<textarea readonly rows="5" onfocus="this.select()">'+esc(JSON.stringify(D))+'</textarea>':"")+(bk=="restore"?'<textarea id="rt" rows="5" placeholder="Paste backup here"></textarea><button class="primary" onclick="doRestore()">Restore this backup</button>':"")+'</div>'}
-var level="All";
+var level="All",srch="";
+function srchIds(){var t=srch.trim().toLowerCase();if(t.length<2)return[];return ids(function(q){return (q[1]+" "+q[2].join(" ")+" "+q[4]+" "+q[0]).toLowerCase().indexOf(t)>=0})}
+function srchUpd(){var e=document.getElementById("sres");if(!e)return;var r=srchIds();e.innerHTML=srch.trim().length<2?'<p class="mute" style="margin:8px 0 0">Type at least 2 letters. '+Q.length+' questions in the bank.</p>':(r.length?'<p class="mute" style="margin:8px 0">'+r.length+' matching question'+(r.length==1?"":"s")+'</p>'+r.slice(0,4).map(function(i){return '<div class="mute" style="font-size:14px;border-top:1px solid var(--line);padding:6px 0">'+Q[i][1]+'</div>'}).join("")+'<button class="primary" onclick="start(srchIds())">Practice these '+r.length+'</button>':'<p class="mute" style="margin:8px 0 0">No questions match.</p>')}
 function inPool(q){return (topic=="All"||q[0]==topic)&&(level=="All"||(level=="Challenge")==(q[6]=="C"))}
 var S=null,view="home",mode="tutor",topic="All",armed=false,A=document.getElementById("app");
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
@@ -126,7 +130,7 @@ function pct(c,a){return a?Math.round(100*c/a):0}
 function ids(f){var r=[];Q.forEach(function(q,i){if(f(q,i))r.push(i)});return r}
 function nav(){var p=view=="progress",im=view=="images"||view=="label"||view=="anatomy";return '<nav><button class="'+(p||im?"":"on")+'" onclick="go(\'home\')">Practice</button><button class="'+(im?"on":"")+'" onclick="if(window.BK)BK.mode=\'grid\';go(\'images\')">Images</button><button class="'+(p?"on":"")+'" onclick="go(\'progress\')">Progress</button></nav>'}
 function go(v){if(view=="quiz"&&S){stopT();commitTest();logSession()}view=v;armed=false;draw()}
-function draw(){window.scrollTo(0,0);({home:home,quiz:quiz,result:result,progress:progress,images:images,label:label,anatomy:anatomy})[view]()}
+function draw(){window.scrollTo(0,0);({home:home,quiz:quiz,result:result,progress:progress,images:images,label:label,anatomy:anatomy})[view]();if(view=="home")srchUpd()}
 function start(list,o){if(!list.length)return;o=o||{};stopT();S={ids:o.keep?list:shuffle(list),i:0,mode:o.mode||mode,ans:{},sid:Date.now(),exam:!!o.secs};if(o.secs){S.end=Date.now()+o.secs*1000;tick=setInterval(tickT,1000)}view="quiz";draw()}
 function daily(){var left=Math.max(0,20-todayA());if(!left)left=20;var d=shuffle(ids(function(q,i){return due(i)})),n=shuffle(ids(function(q,i){return !D.stats[i]})),r=shuffle(ids(function(q,i){return D.stats[i]&&!due(i)})),out=d.slice(0,Math.ceil(left*0.6));n.concat(d.slice(out.length),r).forEach(function(i){if(out.length<left&&out.indexOf(i)<0)out.push(i)});start(shuffle(out),{keep:1,mode:"tutor"})}
 var exLen=40,tick=null;
@@ -145,6 +149,7 @@ var seen=Object.keys(D.stats).length;
 var dn=ids(function(q,i){return due(i)}).length,ta=todayA();
 A.innerHTML=nav()+'<div class="card hero"><h2>Today\'s 20</h2><p class="mute" style="margin:0 0 8px">'+(ta>=20?"Goal done for today: "+ta+" answered. Tap for 20 more.":ta+" of 20 answered today. Mixes reviews that are due with new questions.")+'</p><div class="bar" style="background:rgba(255,255,255,.3)"><i style="background:#fff;width:'+Math.min(100,ta*5)+'%"></i></div><button class="primary" style="margin-top:12px" onclick="daily()">'+(ta>=20?"Start 20 more":"Start today\'s "+(20-ta))+'</button></div>'+
 '<div class="card"><h2>Exam simulation</h2><p class="mute" style="margin:0">Timed, at real SPI pace: 110 questions in 2 hours, about 65 seconds each. Answers stay hidden until the end, then you get a score by topic.</p><div class="seg">'+["20","40","All"].map(function(n){return '<button class="'+(String(exLen)==n?"on":"")+'" onclick="setLen(\''+n+'\')">'+(n=="All"?"All "+Q.length:n)+'</button>'}).join("")+'</div><button class="primary" onclick="exam()">Start timed exam · '+fmt(exN()*65500)+'</button></div>'+
+'<div class="card"><h2>Search questions</h2><input type="text" id="qsr" placeholder="e.g. Nyquist, Bernoulli, mitral" value="'+esc(srch)+'" oninput="srch=this.value;srchUpd()" autocomplete="off"><div id="sres"></div></div>'+
 '<div class="card"><h2>New session</h2><div class="mute">Mode</div><div class="seg"><button class="'+(mode=="tutor"?"on":"")+'" onclick="mode=\'tutor\';draw()">Tutor</button><button class="'+(mode=="test"?"on":"")+'" onclick="mode=\'test\';draw()">Test</button></div><div class="mute">'+(mode=="tutor"?"Tutor shows the answer and explanation after each question.":"Test hides answers until you finish, like the real exam.")+'</div><label class="mute" for="t" style="display:block;margin-top:14px">Topic</label><select id="t" onchange="topic=this.value;draw()"><option>All</option>'+T.map(function(t){return '<option'+(t==topic?" selected":"")+'>'+t+'</option>'}).join("")+'</select><label class="mute" for="lv" style="display:block;margin-top:14px">Level</label><select id="lv" onchange="level=this.value;draw()">'+["All","Foundation","Challenge"].map(function(t){return '<option'+(t==level?" selected":"")+'>'+t+'</option>'}).join("")+'</select><button class="primary" onclick="start(ids(inPool))">Start '+pool.length+' questions</button></div>'+
 '<div class="card"><h2>Review</h2><button class="primary" '+(dn?"":"disabled")+' onclick="start(ids(function(q,i){return due(i)}),{mode:\'tutor\'})">Smart review: '+dn+' due</button><p class="mute">Missed questions come back the same day. Each time you get one right, it waits longer: 1, 2, 4, 7, 14, then 30 days.</p><div class="row"><button class="ghost" '+(missed.length?"":"disabled")+' onclick="start(ids(function(q,i){return D.stats[i]&&D.stats[i].l===0}))">Missed ('+missed.length+')</button><button class="ghost" '+(flagged.length?"":"disabled")+' onclick="start(ids(function(q,i){return D.flags[i]}))">Flagged ('+flagged.length+')</button></div><div class="row"><button class="ghost" '+(fresh.length?"":"disabled")+' onclick="start(ids(function(q){return q[5]}))">New, unchecked ('+fresh.length+')</button></div><p class="mute">You have seen '+seen+' of '+Q.length+' questions. Today: '+todayA()+' of 20 answered.</p></div>'}
 function quiz(){
@@ -171,7 +176,7 @@ A.innerHTML=nav()+'<div class="card"><h2>Overall</h2><div class="big">'+pct(cor,
 function reset(){if(!armed){armed=true;draw();return}D={stats:{},flags:{},sessions:[],days:{}};save();armed=false;draw()}
 document.addEventListener("keydown",function(e){if(view!="quiz")return;if(e.key>="1"&&e.key<="4"){pick(+e.key-1)}else if(e.key=="Enter"){var b=document.getElementById("nx");if(b&&!b.disabled)next()}});
 draw();
-var APPV=26;
+var APPV=27;
 function checkUpdate(){if(!window.fetch)return;fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v>APPV&&view!="quiz"&&location.search.indexOf("v="+j.v)<0){location.replace(location.pathname+"?v="+j.v)}}).catch(function(){})}
 checkUpdate();
 document.addEventListener("visibilitychange",function(){if(!document.hidden)checkUpdate()});
