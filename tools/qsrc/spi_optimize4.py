@@ -1,0 +1,48 @@
+# Source for q/spi-optimize4.js: SPI Optimize images fourth batch (scenarios, math, display calibration).
+I="Instrumentation"; R="Resolution"
+Q=[
+# --- Scenario-based optimization ---
+(I,"The liver and heart look fine at the top, but the bottom third of the image is too bright. The best fix is:","Lower the far-field TGC",["Raise overall gain","Increase output power","Lower the near-field TGC"],"TGC adjusts brightness by depth.","F"),
+(I,"The heart is small and sits in the top half of the screen with empty space below. The best fix is:","Reduce depth",["Increase depth","Widen the sector","Add focal zones"],"Less depth also raises frame rate.","F"),
+(I,"The lateral wall of the LV is cut off at the edge of a narrow sector. The sonographer should:","Widen the sector, accepting a small drop in frame rate",["Reduce depth","Raise gain","Turn on harmonics"],"Return to a narrow sector when imaging a small area.","F"),
+(I,"Valve motion looks jerky. Depth is 22 cm, the sector is wide and there are three focal zones. The best first step is:","Reduce depth, narrow the sector and use one focal zone",["Add more focal zones","Increase line density","Increase persistence"],"All three changes raise frame rate.","F"),
+(I,"Cardiac chambers are filled with fine 'snow'. The best first step is:","Lower the overall gain",["Raise the gain","Raise output power","Increase depth"],"Raising reject can also remove low-level noise.","F"),
+(I,"In a large patient, the far field stays dark even with gain and TGC raised fully. The next step is:","Lower the transmit frequency",["Raise the frequency","Reduce depth","Turn off harmonics"],"Lower frequencies penetrate better.","F"),
+(I,"In a thin patient, near-field structures look blurry. A good change is:","Use a higher transmit frequency",["Use a lower frequency","Increase depth","Raise output power"],"Higher frequency improves resolution where penetration is not a problem.","F"),
+(I,"Valve leaflets look thicker than expected with harmonics on. To measure leaflet thickness accurately, the sonographer can:","Check the measurement with fundamental imaging",["Turn on more harmonics","Raise the gain","Use M-mode only"],"Harmonics can make thin structures look thicker.","C"),
+(I,"An image looks harsh, with mostly black and white and few gray shades. The best fix is:","Increase the dynamic range (less compression)",["Decrease the dynamic range","Raise output power","Reduce depth"],"More gray shades give a smoother image.","F"),
+(I,"A sonographer measures a structure on a read-zoomed image and finds it blurry. This is because read zoom:","Enlarges existing pixels without adding detail",["Adds new scan lines","Changes frequency","Lowers frame rate"],"Write zoom before freezing adds detail.","F"),
+(I,"One side of the sector is dark because of rib shadowing. The best fix is to:","Reposition the transducer to a better window",["Raise all gain","Lower all TGC","Turn off harmonics"],"Changing the angle or moving one rib space often helps.","F"),
+(I,"Strong reverberation near the transducer hides the LV apex. Helpful changes include:","Using harmonics, changing the angle and trying contrast",["Increasing near-field gain","Lowering the frequency","Turning off harmonics"],"Harmonics reduce near-field clutter.","F"),
+(I,"Following ALARA, when an image is too dark, the sonographer should first:","Increase receiver gain before raising output power",["Raise output power first","Increase scan time","Turn off TGC"],"Gain does not increase patient exposure.","F"),
+(I,"Some machines use multiple frequencies across depth, using higher frequency in the near field and lower in the far field. This is designed to:","Balance resolution near the transducer with penetration deeper down",["Improve Doppler only","Lower frame rate","Increase exposure"],"It works with broadband transducers.","C"),
+(I,"Automatic TGC (auto-gain) mainly works by:","Analyzing image brightness and adjusting gain at each depth",["Changing transmit frequency","Increasing output power","Changing the transducer"],"Manual fine-tuning is still often needed.","F"),
+(I,"Edge enhancement set too high can:","Create artificial bright edges and make noise look sharper",["Remove all speckle","Raise penetration","Improve frame rate"],"Use moderate edge enhancement for cardiac imaging.","F"),
+# --- Display and calibration ---
+(I,"Monitor calibration is commonly checked with:","A standard test pattern (such as SMPTE) showing a range of gray steps",["A tissue phantom only","An ECG","A Doppler string phantom"],"A miscalibrated monitor can mislead gain settings.","C"),
+(I,"Viewing images in a brightly lit room tends to make sonographers:","Set the gain too high to compensate",["Set gain too low","Make perfect settings","Use lower frequencies"],"Scanning rooms should have dim, consistent lighting.","F"),
+(I,"Monitor brightness and contrast controls change:","How the image looks on that screen only, not stored data",["The stored image data","Patient exposure","Frame rate"],"Set them once and adjust image settings with gain and TGC.","F"),
+(I,"Seven bits per pixel allow how many shades of gray?","128",["7","64","256"],"2⁷ = 128.","F"),
+(I,"The binary number 1111 equals the decimal number:","15",["4","1,111","16"],"8 + 4 + 2 + 1 = 15.","F"),
+(I,"The binary number 1000 equals the decimal number:","8",["1,000","4","16"],"1 × 8 + 0 + 0 + 0 = 8.","F"),
+(I,"Increasing gain by 20 dB increases signal power by:","100 times",["20 times","2 times","10 times"],"Every 10 dB multiplies power by 10.","C"),
+(I,"A gain change of 6 dB increases signal power by about:","4 times",["6 times","2 times","60 times"],"3 dB doubles power; 6 dB doubles it again.","C"),
+(I,"A gain decrease of 3 dB changes signal power to:","Half",["One-third","One-tenth","Double"],"−3 dB halves the power.","F"),
+(I,"Clip length for echo cine loops is usually set by:","Number of heartbeats (triggered by the ECG) or time",["Patient weight","Transducer frequency","Depth"],"ECG-triggered clips capture complete cardiac cycles.","F"),
+# --- Frame rate and temporal resolution math ---
+(R,"A frame rate of 50 frames per second gives a time per frame of:","20 ms",["50 ms","2 ms","200 ms"],"1 ÷ 50 = 0.02 s.","F"),
+(R,"A frame rate of 25 frames per second gives a time per frame of:","40 ms",["25 ms","4 ms","400 ms"],"1 ÷ 25 = 0.04 s.","F"),
+(R,"Depth 8 cm, 120 lines per frame and 2 focal zones. The maximum frame rate is about:","40 frames per second",["80 frames per second","20 frames per second","160 frames per second"],"77,000 ÷ (8 × 120 × 2) ≈ 40 fps.","C"),
+(R,"Depth 12 cm and 64 lines per frame with one focus. The maximum frame rate is about:","100 frames per second",["50 frames per second","200 frames per second","25 frames per second"],"77,000 ÷ (12 × 64) ≈ 100 fps.","C"),
+(R,"If a valve event lasts 30 ms and the frame rate is 20 fps, the event may be:","Missed or seen in only one frame, because each frame takes 50 ms",["Seen in many frames","Always clear","Shown in slow motion"],"Raise frame rate or use M-mode to catch brief events.","C"),
+(R,"M-mode has better temporal resolution than 2D because it:","Samples a single line thousands of times per second",["Uses higher frequencies","Uses many lines","Uses color"],"Its sampling rate equals the PRF.","F"),
+(R,"Doubling the number of lines per frame while keeping the frame rate the same requires:","Halving the depth",["Doubling the depth","Adding focal zones","Lowering the PRF"],"The total time per frame must stay the same.","C"),
+# --- Resolution concepts ---
+(R,"Spatial resolution of the displayed image is limited by both:","The ultrasound beam and pulse (axial and lateral) and the pixel size",["Only frame rate","Only monitor brightness","Only patient size"],"Small pixels cannot add detail the beam did not capture.","F"),
+(R,"Two thin structures 0.3 mm apart along the beam are seen separately only if the axial resolution is:","0.3 mm or smaller",["1 mm","2 mm","Any value"],"Axial resolution must be equal to or smaller than the gap.","F"),
+(R,"Two side-by-side structures 1 mm apart blur into one at a depth where the beam is 3 mm wide. To separate them, the sonographer can:","Move the focus to that depth or use a higher frequency",["Increase depth","Lower the frequency","Add persistence"],"A narrower beam improves lateral resolution.","F"),
+(R,"Improving lateral resolution by adding focal zones mostly costs:","Temporal resolution (frame rate)",["Axial resolution","Penetration","Contrast resolution"],"Each zone needs extra transmit pulses.","F"),
+(R,"A wider bandwidth pulse usually means:","A shorter pulse and better axial resolution",["A longer pulse","Worse axial resolution","Lower frequency only"],"Short pulses contain many frequencies.","F"),
+(R,"Increasing the spatial pulse length makes axial resolution:","Worse (a larger number)",["Better","Unchanged","Perfect"],"Axial resolution is half the spatial pulse length.","F"),
+(R,"Contrast resolution helps most in:","Telling apart tissues with similar brightness, such as infarcted and normal myocardium",["Measuring time intervals","Doppler velocity","Separating structures along the beam"],"More gray shades and good dynamic range help.","F"),
+]
