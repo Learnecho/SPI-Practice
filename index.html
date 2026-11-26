@@ -71,7 +71,8 @@ summary{cursor:pointer}
 .sync.warn{border-left-color:var(--flag)}
 .sync.wait{border-left-color:var(--mute)}
 .sync .ghost{margin-top:8px}
-.an{width:100%;max-width:480px;display:block;margin:12px auto;touch-action:manipulation}.an .ap{cursor:pointer}.an .ap path{stroke:#fff;stroke-width:1.5}.an .svc path,.an .ivc path,.an .ra path,.an .rv path,.an .pa path{fill:#6f9fd8}.an .la path,.an .lv path,.an .pv path,.an .ao path{fill:#d9706b}.an .ivs path,.an .pm path{fill:#a8767b}.an .vl{stroke:#f2c230!important;stroke-width:9!important;stroke-linecap:round;fill:none}.an .ln2{stroke:#a8767b!important;stroke-width:8!important;stroke-linecap:round;fill:none}.an .on path{stroke:var(--ink);stroke-width:3;filter:brightness(1.15)}.an .on .vl,.an .on .ln2{stroke:var(--ink)!important}.an .good path{fill:#3fae6e!important}.an .good .vl,.an .good .ln2{stroke:#3fae6e!important}.an .miss path{fill:#f0a020!important}.an .miss .vl,.an .miss .ln2{stroke:#f0a020!important}.an .ant{font:12px -apple-system,sans-serif;fill:var(--mute)}
+.an{width:100%;max-width:480px;display:block;margin:12px auto;touch-action:manipulation}.an .ap{cursor:pointer}.an .ap path{stroke:#fff;stroke-width:1.5}.an .svc path,.an .ivc path,.an .ra path,.an .rv path,.an .pa path{fill:#6f9fd8}.an .la path,.an .lv path,.an .pv path,.an .ao path{fill:#d9706b}.an .ivs path,.an .pm path{fill:#a8767b}.an .vl{stroke:#f2c230!important;stroke-width:9!important;stroke-linecap:round;fill:none}.an .ln2{stroke:#a8767b!important;stroke-width:8!important;stroke-linecap:round;fill:none}.an .on path{stroke:var(--ink);stroke-width:3;filter:brightness(1.15)}.an .on .vl,.an .on .ln2{stroke:var(--ink)!important}.an .good path{fill:#3fae6e!important}.an .good .vl,.an .good .ln2{stroke:#3fae6e!important}.an .miss path{fill:#f0a020!important}.an .miss .vl,.an .miss .ln2{stroke:#f0a020!important}.ecg{width:100%;max-width:480px;display:block;margin:0 auto 6px}.spd button{padding:8px 4px;font-size:14px}
+.an .ant{font:12px -apple-system,sans-serif;fill:var(--mute)}
 .lv{width:100%;max-width:520px;display:block;margin:12px auto;border-radius:8px}.lv .sec{fill:#0b0f12}.lv .ts{fill:#cfd6da}.lv .ln{stroke:#cfd6da;stroke-width:3;fill:none}.lv .cav{fill:#0b0f12;stroke:#7d888e;stroke-width:3}.lv .br{stroke:#fff;stroke-width:5;fill:none}.lv .rim{fill:#0b0f12;stroke:#cfd6da;stroke-width:4}.lv .mk circle{fill:#ffd43b;stroke:#000;stroke-width:1.5}.lv .mk text{font:700 14px -apple-system,sans-serif;fill:#000}.lv .mk.ok circle{fill:#5BC48C}.lv .mk.bad circle{fill:#F0877D}
 .lrow{display:flex;gap:10px;align-items:flex-start}.lrow select{margin:6px 0 10px}.lnum{flex:none;width:30px;height:30px;border-radius:50%;background:#ffd43b;color:#000;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:12px}.lnum.ok{background:#5BC48C}.lnum.bad{background:#F0877D}
 .timer{font-variant-numeric:tabular-nums;font-weight:600}
@@ -92,10 +93,10 @@ textarea{width:100%;margin-top:10px;padding:10px;border:1px solid var(--line);bo
 </header>
 <div id="app"></div>
 </main>
-<script src="questions.js?v=16"></script>
-<script src="echo-images.js?v=16"></script>
-<script src="labels.js?v=16"></script>
-<script src="anatomy.js?v=16"></script>
+<script src="questions.js?v=17"></script>
+<script src="echo-images.js?v=17"></script>
+<script src="labels.js?v=17"></script>
+<script src="anatomy.js?v=17"></script>
 <script>
 var T=[];Q.forEach(function(q){if(T.indexOf(q[0])<0)T.push(q[0])});
 var KEY="spi_practice_v1",D={stats:{},flags:{},sessions:[],days:{}};
@@ -168,7 +169,7 @@ A.innerHTML=nav()+'<div class="card"><h2>Overall</h2><div class="big">'+pct(cor,
 function reset(){if(!armed){armed=true;draw();return}D={stats:{},flags:{},sessions:[],days:{}};save();armed=false;draw()}
 document.addEventListener("keydown",function(e){if(view!="quiz")return;if(e.key>="1"&&e.key<="4"){pick(+e.key-1)}else if(e.key=="Enter"){var b=document.getElementById("nx");if(b&&!b.disabled)next()}});
 draw();
-var APPV=16;
+var APPV=17;
 function checkUpdate(){if(!window.fetch)return;fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v>APPV&&view!="quiz"&&location.search.indexOf("v="+j.v)<0){location.replace(location.pathname+"?v="+j.v)}}).catch(function(){})}
 checkUpdate();
 document.addEventListener("visibilitychange",function(){if(!document.hidden)checkUpdate()});

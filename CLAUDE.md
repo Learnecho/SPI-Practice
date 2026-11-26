@@ -21,3 +21,4 @@ Echo images live in `img/` and are listed in `echo-images.js` (EIMG array; `IMG`
 - My images: user uploads stored on the device in IndexedDB (`spi_images`), not in the text backup.
 - Label the view: labels.js holds original schematic SVG views (LV object: svg + numbered marks). Never copy course or textbook diagrams into this public repo; draw original ones.
 - Heart anatomy: anatomy.js, an original schematic frontal heart (AN array: key, name, SVG, description). Learn mode (tap for info) and quiz mode (tap the named structure, 10 per round).
+- Animate mode (anatomy.js, ANI/ROUTES): one cardiac cycle with phase model phase(f); chambers scale, valves open via stroke-dasharray, blood particles move along polyline routes and queue at closed valves; synced ECG marker.
