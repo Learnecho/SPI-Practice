@@ -35,4 +35,4 @@ Goal: ~100 normal and 300+ abnormal echo images.
 - Write new batches as Python sources in tools/qsrc/<name>.py (topic, stem, correct, [3 distractors], explanation, "F"/"C"), then build with `python3 tools/build_questions.py <module> <q-file-name>`; it shuffles answer positions with a fixed seed.
 - Row format: [topic, stem, options, answerIndex, explanation, 1 (= "New, unchecked" until owner reviews), "C" for Challenge].
 - Plan: SPI ~1,000 (waves, transducers, resolution, attenuation, pulsed echo, instrumentation, Doppler, hemodynamics, artifacts, safety, QA); Adult Echo ~2,000 (anatomy/views, LV/RV function, each valve, cardiomyopathies, pericardium, CAD/MI, congenital, masses, aorta, devices, calculations).
-- Batches done: spi_doppler (107, Doppler + Hemodynamics).
+- Batches done: spi_doppler (107, Doppler + Hemodynamics); spi_transducers (102, Transducers + Resolution).

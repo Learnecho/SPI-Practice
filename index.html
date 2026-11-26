@@ -94,15 +94,16 @@ textarea{width:100%;margin-top:10px;padding:10px;border:1px solid var(--line);bo
 </header>
 <div id="app"></div>
 </main>
-<script src="questions.js?v=28"></script>
+<script src="questions.js?v=29"></script>
 <!-- Question files are append-only and must stay in this order: progress is stored by question index. Add new files at the end of this list. -->
-<script src="q/spi-doppler.js?v=28"></script>
-<script src="bank.js?v=28"></script>
-<script src="echo-images.js?v=28"></script>
-<script src="labels.js?v=28"></script>
-<script src="anatomy.js?v=28"></script>
+<script src="q/spi-doppler.js?v=29"></script>
+<script src="q/spi-transducers.js?v=29"></script>
+<script src="bank.js?v=29"></script>
+<script src="echo-images.js?v=29"></script>
+<script src="labels.js?v=29"></script>
+<script src="anatomy.js?v=29"></script>
 <script>
-var APPV=28;
+var APPV=29;
 var T=[];Q.forEach(function(q){if(T.indexOf(q[0])<0)T.push(q[0])});
 var KEY="spi_practice_v1",D={stats:{},flags:{},sessions:[],days:{}};
 try{var L=JSON.parse(localStorage.getItem(KEY));if(L&&L.stats)D=L}catch(e){}
