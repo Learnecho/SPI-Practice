@@ -94,25 +94,26 @@ textarea{width:100%;margin-top:10px;padding:10px;border:1px solid var(--line);bo
 </header>
 <div id="app"></div>
 </main>
-<script src="questions.js?v=41"></script>
+<script src="questions.js?v=42"></script>
 <!-- Question files are append-only and must stay in this order: progress is stored by question index. Add new files at the end of this list. -->
-<script src="q/spi-doppler.js?v=41"></script>
-<script src="q/spi-transducers.js?v=41"></script>
-<script src="q/spi-waves.js?v=41"></script>
-<script src="q/spi-instrument.js?v=41"></script>
-<script src="q/spi-safety-qa.js?v=41"></script>
-<script src="q/ae-valves.js?v=41"></script>
-<script src="q/ae-cardiomyopathy.js?v=41"></script>
-<script src="q/ae-care-contrast.js?v=41"></script>
-<script src="q/ae-peri-aorta-mass.js?v=41"></script>
-<script src="q/ae-chd-ph.js?v=41"></script>
-<script src="q/ae-anatomy-views.js?v=41"></script>
-<script src="bank.js?v=41"></script>
-<script src="echo-images.js?v=41"></script>
-<script src="labels.js?v=41"></script>
-<script src="anatomy.js?v=41"></script>
+<script src="q/spi-doppler.js?v=42"></script>
+<script src="q/spi-transducers.js?v=42"></script>
+<script src="q/spi-waves.js?v=42"></script>
+<script src="q/spi-instrument.js?v=42"></script>
+<script src="q/spi-safety-qa.js?v=42"></script>
+<script src="q/ae-valves.js?v=42"></script>
+<script src="q/ae-cardiomyopathy.js?v=42"></script>
+<script src="q/ae-care-contrast.js?v=42"></script>
+<script src="q/ae-peri-aorta-mass.js?v=42"></script>
+<script src="q/ae-chd-ph.js?v=42"></script>
+<script src="q/ae-anatomy-views.js?v=42"></script>
+<script src="q/spi-doppler2.js?v=42"></script>
+<script src="bank.js?v=42"></script>
+<script src="echo-images.js?v=42"></script>
+<script src="labels.js?v=42"></script>
+<script src="anatomy.js?v=42"></script>
 <script>
-var APPV=41;
+var APPV=42;
 var T=[];Q.forEach(function(q){if(T.indexOf(q[0])<0)T.push(q[0])});
 var KEY="spi_practice_v1",D={stats:{},flags:{},sessions:[],days:{}};
 try{var L=JSON.parse(localStorage.getItem(KEY));if(L&&L.stats)D=L}catch(e){}
