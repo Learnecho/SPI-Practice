@@ -94,18 +94,18 @@ textarea{width:100%;margin-top:10px;padding:10px;border:1px solid var(--line);bo
 </header>
 <div id="app"></div>
 </main>
-<script src="questions.js?v=33"></script>
+<script src="questions.js?v=34"></script>
 <!-- Question files are append-only and must stay in this order: progress is stored by question index. Add new files at the end of this list. -->
-<script src="q/spi-doppler.js?v=33"></script>
-<script src="q/spi-transducers.js?v=33"></script>
-<script src="q/spi-waves.js?v=33"></script>
-<script src="q/spi-instrument.js?v=33"></script>
-<script src="bank.js?v=33"></script>
-<script src="echo-images.js?v=33"></script>
-<script src="labels.js?v=33"></script>
-<script src="anatomy.js?v=33"></script>
+<script src="q/spi-doppler.js?v=34"></script>
+<script src="q/spi-transducers.js?v=34"></script>
+<script src="q/spi-waves.js?v=34"></script>
+<script src="q/spi-instrument.js?v=34"></script>
+<script src="bank.js?v=34"></script>
+<script src="echo-images.js?v=34"></script>
+<script src="labels.js?v=34"></script>
+<script src="anatomy.js?v=34"></script>
 <script>
-var APPV=33;
+var APPV=34;
 var T=[];Q.forEach(function(q){if(T.indexOf(q[0])<0)T.push(q[0])});
 var KEY="spi_practice_v1",D={stats:{},flags:{},sessions:[],days:{}};
 try{var L=JSON.parse(localStorage.getItem(KEY));if(L&&L.stats)D=L}catch(e){}
@@ -146,10 +146,16 @@ var BP={spi:{name:"SPI",full:"ARDMS SPI, content outline V24.1",n:110,sec:7200/1
 ["Clinical safety and quality assurance",10,["Quality assurance"]]]},
 ae:{name:"Adult Echo",full:"ARDMS Adult Echocardiography, content outline V24.2",n:150,sec:10800/150,target:2000,doms:[
 ["Anatomy and physiology",15,["Anatomy","Physiology"]],
-["Pathology",40,["Coronary & wall motion","Transplant & devices","Valve disease","Cardiomyopathy","Pericardial disease","Congenital","Masses","Aorta"]],
+["Pathology",40,["Coronary & wall motion","Transplant & devices","Valve disease","Prosthetic valves","Endocarditis","Cardiomyopathy","Pericardial disease","Congenital","Masses","Aorta"]],
 ["Clinical care and safety",11,["Clinical care"]],
 ["Measurements, maneuvers and views",25,["Echo views","Measurements"]],
-["Instrumentation, optimization and contrast",9,["Echo instrumentation","Contrast"]]]}};
+["Instrumentation, optimization and contrast",9,["Echo instrumentation","Contrast"]]]},
+rcs:{name:"CCI RCS",full:"CCI Registered Cardiac Sonographer, matrix for exams from July 1, 2023",n:170,sec:10800/170,target:2000,doms:[
+["Preparing for the echo procedure",5,["Clinical care"]],
+["Performing echo imaging",24,["Echo views","Measurements","Contrast","Stress echo"]],
+["Evaluating valvular findings",25,["Valve disease","Prosthetic valves","Endocarditis"]],
+["Anatomy, physiology and hemodynamics",29,["Anatomy","Physiology","Hemodynamics","Coronary & wall motion","Transplant & devices","Cardiomyopathy","Pericardial disease","Congenital","Masses","Aorta"]],
+["Applying ultrasound physics",13,["Waves","Physics","Attenuation","Artifacts","Transducers","Resolution","Instrumentation","Doppler","Safety","Echo instrumentation"]]]}};
 var exLen="Full",exBp="spi",tick=null;
 function domOf(b,t){var d=BP[b].doms;for(var i=0;i<d.length;i++)if(d[i][2].indexOf(t)>=0)return i;return -1}
 function bpIds(b,i){return ids(function(q){return domOf(b,q[0])==i})}
@@ -157,7 +163,7 @@ function exN(){var b=BP[exBp],tot=0;b.doms.forEach(function(d,i){tot+=bpIds(exBp
 function setLen(v){exLen=v;draw()}
 function setBp(v){exBp=v;draw()}
 function exam(){var b=BP[exBp],n=exN(),pick=[],short=[];
-var want=b.doms.map(function(d){return Math.round(n*d[1]/100)});var diff=n-want.reduce(function(a,c){return a+c},0);want[3]+=diff;
+var ps=b.doms.reduce(function(a,d){return a+d[1]},0),want=b.doms.map(function(d){return Math.round(n*d[1]/ps)}),big=0;b.doms.forEach(function(d,i){if(d[1]>b.doms[big][1])big=i});want[big]+=n-want.reduce(function(a,c){return a+c},0);
 b.doms.forEach(function(d,i){var pool=shuffle(bpIds(exBp,i)),k=Math.min(want[i],pool.length);if(k<want[i])short.push(d[0]);pick=pick.concat(pool.slice(0,k))});
 if(pick.length<n){var rest=shuffle(ids(function(q,i){return domOf(exBp,q[0])>=0&&pick.indexOf(i)<0}));pick=pick.concat(rest.slice(0,n-pick.length))}
 start(shuffle(pick),{keep:1,mode:"test",secs:Math.round(pick.length*b.sec)});S.bp=exBp;S.short=short}
@@ -172,7 +178,7 @@ var fresh=ids(function(q){return q[5]});
 var seen=Object.keys(D.stats).length;
 var dn=ids(function(q,i){return due(i)}).length,ta=todayA();
 A.innerHTML=nav()+'<div class="card hero"><h2>Today\'s 20</h2><p class="mute" style="margin:0 0 8px">'+(ta>=20?"Goal done for today: "+ta+" answered. Tap for 20 more.":ta+" of 20 answered today. Mixes reviews that are due with new questions.")+'</p><div class="bar" style="background:rgba(255,255,255,.3)"><i style="background:#fff;width:'+Math.min(100,ta*5)+'%"></i></div><button class="primary" style="margin-top:12px" onclick="daily()">'+(ta>=20?"Start 20 more":"Start today\'s "+(20-ta))+'</button></div>'+
-'<div class="card"><h2>Exam simulation</h2><div class="seg">'+["spi","ae"].map(function(k){return '<button class="'+(exBp==k?"on":"")+'" onclick="setBp(\''+k+'\')">'+BP[k].name+'</button>'}).join("")+'</div><p class="mute" style="margin:0">Questions are drawn by the '+BP[exBp].full+' domain weights, timed at real pace ('+BP[exBp].n+' questions, about '+Math.round(BP[exBp].sec)+' seconds each). Answers stay hidden until the end.</p><div class="seg">'+["20","40","Full"].map(function(n){return '<button class="'+(String(exLen)==n?"on":"")+'" onclick="setLen(\''+n+'\')">'+(n=="Full"?"Full "+BP[exBp].n:n)+'</button>'}).join("")+'</div><button class="primary" '+(exN()?"":"disabled")+' onclick="exam()">Start timed exam · '+exN()+' questions · '+fmt(exN()*BP[exBp].sec*1000)+'</button></div>'+
+'<div class="card"><h2>Exam simulation</h2><div class="seg">'+["spi","ae","rcs"].map(function(k){return '<button class="'+(exBp==k?"on":"")+'" onclick="setBp(\''+k+'\')">'+BP[k].name+'</button>'}).join("")+'</div><p class="mute" style="margin:0">Questions follow the domain weights of the '+BP[exBp].full+'. Timed at real pace ('+BP[exBp].n+' questions, about '+Math.round(BP[exBp].sec)+' seconds each). Answers stay hidden until the end.</p><div class="seg">'+["20","40","Full"].map(function(n){return '<button class="'+(String(exLen)==n?"on":"")+'" onclick="setLen(\''+n+'\')">'+(n=="Full"?"Full "+BP[exBp].n:n)+'</button>'}).join("")+'</div><button class="primary" '+(exN()?"":"disabled")+' onclick="exam()">Start timed exam · '+exN()+' questions · '+fmt(exN()*BP[exBp].sec*1000)+'</button></div>'+
 '<div class="card"><h2>Search questions</h2><input type="text" id="qsr" placeholder="e.g. Nyquist, Bernoulli, mitral" value="'+esc(srch)+'" oninput="srch=this.value;srchUpd()" autocomplete="off"><div id="sres"></div></div>'+
 '<div class="card"><h2>New session</h2><div class="mute">Mode</div><div class="seg"><button class="'+(mode=="tutor"?"on":"")+'" onclick="mode=\'tutor\';draw()">Tutor</button><button class="'+(mode=="test"?"on":"")+'" onclick="mode=\'test\';draw()">Test</button></div><div class="mute">'+(mode=="tutor"?"Tutor shows the answer and explanation after each question.":"Test hides answers until you finish, like the real exam.")+'</div><label class="mute" for="t" style="display:block;margin-top:14px">Topic</label><select id="t" onchange="topic=this.value;draw()"><option>All</option>'+T.map(function(t){return '<option'+(t==topic?" selected":"")+'>'+t+'</option>'}).join("")+'</select><label class="mute" for="lv" style="display:block;margin-top:14px">Level</label><select id="lv" onchange="level=this.value;draw()">'+["All","Foundation","Challenge"].map(function(t){return '<option'+(t==level?" selected":"")+'>'+t+'</option>'}).join("")+'</select><button class="primary" onclick="start(ids(inPool))">Start '+pool.length+' questions</button></div>'+
 '<div class="card"><h2>Review</h2><button class="primary" '+(dn?"":"disabled")+' onclick="start(ids(function(q,i){return due(i)}),{mode:\'tutor\'})">Smart review: '+dn+' due</button><p class="mute">Missed questions come back the same day. Each time you get one right, it waits longer: 1, 2, 4, 7, 14, then 30 days.</p><div class="row"><button class="ghost" '+(missed.length?"":"disabled")+' onclick="start(ids(function(q,i){return D.stats[i]&&D.stats[i].l===0}))">Missed ('+missed.length+')</button><button class="ghost" '+(flagged.length?"":"disabled")+' onclick="start(ids(function(q,i){return D.flags[i]}))">Flagged ('+flagged.length+')</button></div><div class="row"><button class="ghost" '+(fresh.length?"":"disabled")+' onclick="start(ids(function(q){return q[5]}))">New, unchecked ('+fresh.length+')</button></div><p class="mute">You have seen '+seen+' of '+Q.length+' questions. Today: '+todayA()+' of 20 answered.</p></div>'}
@@ -191,7 +197,7 @@ var n=S.ids.length,p=pct(S.sc,n);
 A.innerHTML=nav()+'<div class="card"><h2>Session complete</h2><div class="big">'+S.sc+' / '+n+'</div><p class="mute">'+p+'% correct · '+(S.exam?"Exam simulation"+(S.timeout?" · time ran out":""):(S.mode=="tutor"?"Tutor":"Test")+" mode")+'</p><div class="bar"><i style="width:'+p+'%"></i></div><button class="primary" onclick="go(\'home\')">Back to practice</button></div>'+domTable()+topicTable()+'<div class="card"><h2>Review</h2>'+S.ids.map(function(id,j){var q=Q[id],a=S.ans[id],ok=a===q[3];return '<details><summary>'+(j+1)+'. '+(ok?"Correct":"Incorrect")+' · '+q[0]+'</summary><p>'+q[1]+'</p><p><strong>Your answer:</strong> '+(a===undefined?"No answer":q[2][a])+'<br><strong>Correct answer:</strong> '+q[2][q[3]]+'</p><p class="mute">'+q[4]+'</p>'+dg(id,"stem")+dg(id,"exp")+'</details>'}).join("")+'</div>'}
 function domTable(){if(!S.bp)return"";var b=BP[S.bp],r=b.doms.map(function(d){return{n:0,c:0}});S.ids.forEach(function(id){var i=domOf(S.bp,Q[id][0]);if(i>=0){r[i].n++;if(S.ans[id]===Q[id][3])r[i].c++}});
 return '<div class="card"><h2>Score by exam domain</h2><p class="mute" style="margin:0 0 6px">'+b.full+'</p><table class="tp">'+b.doms.map(function(d,i){return '<tr><td>'+d[0]+' <span class="mute">('+d[1]+'%)</span></td><td>'+(r[i].n?r[i].c+' / '+r[i].n+' · '+pct(r[i].c,r[i].n)+'%':'none yet')+'</td></tr>'}).join("")+'</table>'+(S.short&&S.short.length?'<p class="mute" style="font-size:13px">Not enough questions yet in: '+S.short.join(", ")+'. Filled from other domains.</p>':'')+'</div>'}
-function bpCard(){return '<div class="card"><h2>Question bank vs. exam blueprints</h2>'+["spi","ae"].map(function(k){var b=BP[k],tot=0,rows=b.doms.map(function(d,i){var n=bpIds(k,i).length,t=Math.round(b.target*d[1]/100);tot+=n;return '<div class="trow"><div><span>'+d[0]+' <span class="mute">'+d[1]+'%</span></span><span class="mute">'+n+' / '+t+'</span></div><div class="bar"><i style="width:'+Math.min(100,100*n/t)+'%"></i></div></div>'}).join("");return '<p style="margin:12px 0 6px"><strong>'+b.name+'</strong> <span class="mute">· '+tot+' of '+b.target+' planned</span></p>'+rows}).join("")+'</div>'}
+function bpCard(){return '<div class="card"><h2>Question bank vs. exam blueprints</h2>'+["spi","ae","rcs"].map(function(k){var b=BP[k],tot=0,rows=b.doms.map(function(d,i){var n=bpIds(k,i).length,t=Math.round(b.target*d[1]/100);tot+=n;return '<div class="trow"><div><span>'+d[0]+' <span class="mute">'+d[1]+'%</span></span><span class="mute">'+n+' / '+t+'</span></div><div class="bar"><i style="width:'+Math.min(100,100*n/t)+'%"></i></div></div>'}).join("");return '<p style="margin:12px 0 6px"><strong>'+b.name+'</strong> <span class="mute">· '+tot+' of '+b.target+' planned</span></p>'+rows}).join("")+'</div>'}
 function topicTable(){var by={};S.ids.forEach(function(id){var t=Q[id][0];by[t]=by[t]||{n:0,c:0};by[t].n++;if(S.ans[id]===Q[id][3])by[t].c++});var ks=Object.keys(by).sort(function(a,b){return by[a].c/by[a].n-by[b].c/by[b].n});return '<div class="card"><h2>Score by topic</h2><p class="mute" style="margin:0 0 6px">Weakest first.</p><table class="tp">'+ks.map(function(t){return '<tr><td>'+t+'</td><td>'+by[t].c+' / '+by[t].n+' · '+pct(by[t].c,by[t].n)+'%</td></tr>'}).join("")+'</table></div>'}
 function progress(){
 var tot=0,cor=0;Object.keys(D.stats).forEach(function(k){tot+=D.stats[k].a;cor+=D.stats[k].c});
