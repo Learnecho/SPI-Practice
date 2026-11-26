@@ -94,20 +94,21 @@ textarea{width:100%;margin-top:10px;padding:10px;border:1px solid var(--line);bo
 </header>
 <div id="app"></div>
 </main>
-<script src="questions.js?v=36"></script>
+<script src="questions.js?v=37"></script>
 <!-- Question files are append-only and must stay in this order: progress is stored by question index. Add new files at the end of this list. -->
-<script src="q/spi-doppler.js?v=36"></script>
-<script src="q/spi-transducers.js?v=36"></script>
-<script src="q/spi-waves.js?v=36"></script>
-<script src="q/spi-instrument.js?v=36"></script>
-<script src="q/spi-safety-qa.js?v=36"></script>
-<script src="q/ae-valves.js?v=36"></script>
-<script src="bank.js?v=36"></script>
-<script src="echo-images.js?v=36"></script>
-<script src="labels.js?v=36"></script>
-<script src="anatomy.js?v=36"></script>
+<script src="q/spi-doppler.js?v=37"></script>
+<script src="q/spi-transducers.js?v=37"></script>
+<script src="q/spi-waves.js?v=37"></script>
+<script src="q/spi-instrument.js?v=37"></script>
+<script src="q/spi-safety-qa.js?v=37"></script>
+<script src="q/ae-valves.js?v=37"></script>
+<script src="q/ae-cardiomyopathy.js?v=37"></script>
+<script src="bank.js?v=37"></script>
+<script src="echo-images.js?v=37"></script>
+<script src="labels.js?v=37"></script>
+<script src="anatomy.js?v=37"></script>
 <script>
-var APPV=36;
+var APPV=37;
 var T=[];Q.forEach(function(q){if(T.indexOf(q[0])<0)T.push(q[0])});
 var KEY="spi_practice_v1",D={stats:{},flags:{},sessions:[],days:{}};
 try{var L=JSON.parse(localStorage.getItem(KEY));if(L&&L.stats)D=L}catch(e){}
