@@ -1,0 +1,32 @@
+// Interactive heart anatomy: original schematic frontal view. Tap to learn, or quiz.
+var AN=[
+["svc","Superior vena cava",'<path d="M94 30 H124 V138 H94 Z"/>',"Brings deoxygenated blood from the head, neck and arms into the top of the right atrium. Seen in the subcostal and suprasternal views."],
+["ivc","Inferior vena cava",'<path d="M78 222 L110 226 L110 310 H78 Z"/>',"Brings deoxygenated blood from the lower body into the right atrium. Measured in the subcostal view: size and collapse with a sniff estimate right atrial pressure."],
+["ra","Right atrium",'<path d="M66 132 Q58 205 98 236 L170 236 Q182 170 152 124 Q110 108 66 132 Z"/>',"Receives blood from the SVC, IVC and coronary sinus. Seen best in the apical four-chamber and subcostal views."],
+["rv","Right ventricle",'<path d="M96 250 L204 242 Q224 290 246 338 Q150 322 96 250 Z"/>',"The most anterior chamber, triangular and trabeculated, with a moderator band. Pumps blood to the lungs through the pulmonic valve."],
+["ivs","Interventricular septum",'<path d="M206 241 L234 229 L264 342 L248 339 Z"/>',"The muscular wall between the ventricles. Watch its motion: flattening suggests RV pressure or volume overload."],
+["lv","Left ventricle",'<path d="M236 228 L302 210 Q344 262 302 348 Q278 354 266 342 Z"/>',"The thick-walled main pumping chamber. It forms the cardiac apex and pumps blood into the aorta."],
+["la","Left atrium",'<path d="M196 140 Q228 112 292 128 Q308 168 292 200 L238 212 Q204 190 196 140 Z"/>',"The most posterior chamber. Receives oxygenated blood from the four pulmonary veins. Its volume is measured at end-systole."],
+["pv","Pulmonary veins",'<path d="M290 140 H340 V152 H292 Z M292 172 H338 V184 H290 Z"/>',"Four veins that bring oxygenated blood from the lungs into the left atrium. Their Doppler pattern helps judge LA pressure."],
+["ao","Aorta",'<path d="M196 220 V76 Q196 28 262 28 Q334 28 334 80 V132 H310 V84 Q310 52 262 52 Q222 52 222 78 V220 Z"/>',"Carries oxygenated blood from the LV to the body. The root, ascending aorta and arch are seen in PLAX and the suprasternal view."],
+["pa","Pulmonary artery",'<path d="M158 262 L192 256 L262 112 L306 98 L300 84 L238 100 Z"/>',"Arises from the RV outflow tract, in front of the aorta, and carries deoxygenated blood to the lungs. Seen in the PSAX view at the aortic valve level."],
+["tv","Tricuspid valve",'<path class="vl" d="M100 242 L156 241"/>',"Between the right atrium and right ventricle. It has three leaflets and sits slightly closer to the apex than the mitral valve."],
+["mv","Mitral valve",'<path class="vl" d="M238 216 L298 206"/>',"Between the left atrium and left ventricle. It has two leaflets, anterior and posterior, held by chordae to the papillary muscles."],
+["avl","Aortic valve",'<path class="vl" d="M197 222 L221 222"/>',"Between the LV outflow tract and the aorta. It has three cusps: right, left and non-coronary."],
+["pvl","Pulmonic valve",'<path class="vl" d="M194 202 L216 202"/>',"Between the RV outflow tract and the pulmonary artery. The most anterior valve."],
+["mb","Moderator band",'<path class="ln2" d="M140 286 L222 300"/>',"A muscle bundle crossing the RV near its apex, carrying part of the right bundle branch. It helps you tell the RV from the LV."],
+["pm","Papillary muscles",'<path d="M272 300 Q284 276 296 300 Z M250 318 Q262 296 272 320 Z"/>',"Muscles in the LV wall that anchor the mitral chordae. The posteromedial one usually has a single blood supply, so it ruptures more often after MI."]
+];
+var anMode="learn",anSel=null,anQ=null;
+function anSvg(){return '<svg class="an" viewBox="40 16 320 368" role="img" aria-label="Schematic heart in frontal view. Tap a structure.">'+AN.map(function(a){var c="ap "+a[0]+(anSel==a[0]?" on":"")+(anQ&&anQ.flash==a[0]?" "+anQ.fc:"");return '<g class="'+c+'" onclick="anTap(\''+a[0]+'\')">'+a[2]+'</g>'}).join("")+'<text x="56" y="378" class="ant">Patient\'s right</text><text x="344" y="378" text-anchor="end" class="ant">Patient\'s left</text></svg>'}
+function anFind(k){for(var i=0;i<AN.length;i++)if(AN[i][0]==k)return AN[i]}
+function anTap(k){if(anMode=="learn"){anSel=k;anatomy();return}
+if(!anQ||anQ.done||anQ.lock)return;var t=anQ.list[anQ.i],ok=k==t;if(ok)anQ.sc++;anQ.flash=ok?k:t;anQ.fc=ok?"good":"miss";anQ.last=ok?"Correct: "+anFind(t)[1]+".":"Not quite. That was the "+anFind(k)[1].toLowerCase()+". The "+anFind(t)[1].toLowerCase()+" is highlighted.";anQ.lock=1;anatomy();setTimeout(function(){anQ.lock=0;anQ.flash=null;anQ.i++;if(anQ.i>=anQ.list.length)anQ.done=1;if(view=="anatomy")anatomy()},ok?900:1800)}
+function anStart(){anMode="quiz";anSel=null;anQ={list:shuffle(AN.map(function(a){return a[0]})).slice(0,10),i:0,sc:0};anatomy()}
+function anLearn(){anMode="learn";anQ=null;anatomy()}
+function anatomy(){var info,head;
+if(anMode=="learn"){var a=anSel&&anFind(anSel);info=a?'<div class="exp good" style="margin-top:0"><strong>'+a[1]+'.</strong> '+a[3]+'</div>':'<p class="mute">Tap any chamber, valve or vessel to learn about it.</p>';head='<div class="seg"><button class="on">Learn</button><button onclick="anStart()">Quiz me</button></div>'}
+else{head='<div class="seg"><button onclick="anLearn()">Learn</button><button class="on">Quiz me</button></div>';
+info=anQ.done?'<div class="exp '+(anQ.sc>=8?"good":"miss")+'" style="margin-top:0"><strong>'+anQ.sc+' of '+anQ.list.length+' correct.</strong> '+(anQ.sc>=8?"Great work.":"Switch to Learn to review, then try again.")+'</div><button class="primary" onclick="anStart()">Quiz again</button>':'<p style="font-size:18px;margin:0 0 6px"><strong>Tap the '+anFind(anQ.list[anQ.i])[1].toLowerCase()+'</strong></p><p class="mute" style="margin:0">Question '+(anQ.i+1)+' of '+anQ.list.length+' · Score '+anQ.sc+'</p>'+(anQ.lock&&anQ.last?'<div class="exp '+anQ.fc+'">'+anQ.last+'</div>':'')}
+A.innerHTML=nav()+'<div class="card"><button class="ghost" onclick="go(\'images\')">Back to images</button><h2 style="margin-top:12px">Heart anatomy</h2><p class="mute" style="margin:0">A simplified front view, as if facing the patient. Right heart in blue, left heart in red.</p>'+head+info+anSvg()+'</div>'}
+function anatomyCard(){return '<div class="card"><h2>Heart anatomy</h2><p class="mute" style="margin:0 0 8px">Tap chambers, valves and vessels to learn them, then quiz yourself.</p><button class="primary" onclick="anMode=\'learn\';anSel=null;anQ=null;view=\'anatomy\';draw()">Open heart anatomy</button></div>'}
