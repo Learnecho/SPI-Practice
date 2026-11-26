@@ -21,6 +21,14 @@ for topic, stem, right, wrong, exp, level in src:
     rows.append(row)
 stems = [r[1] for r in rows]
 assert len(stems) == len(set(stems)), "duplicate stem"
+# Warn about stems that already exist in other question files
+import re, glob
+others = set()
+for f in [os.path.join(root, "questions.js")] + glob.glob(os.path.join(root, "q", "*.js")):
+    if f.endswith(out + ".js"): continue
+    others |= {m.lower() for m in re.findall(r'\["[^"]*", ?"((?:[^"\\]|\\.)*)"', open(f).read())}
+dup = [x for x in stems if x.lower() in others]
+assert not dup, "stem already in bank: %r" % dup
 body = ",\n".join(json.dumps(r, ensure_ascii=False) for r in rows)
 open(os.path.join(root, "q", out + ".js"), "w").write("// Built from tools/qsrc/%s.py. Append-only.\nQ.push(\n%s\n);\n" % (mod, body))
 print(out, len(rows), "questions; answer positions:", [sum(1 for r in rows if r[3]==k) for k in range(4)])
