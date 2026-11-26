@@ -94,23 +94,24 @@ textarea{width:100%;margin-top:10px;padding:10px;border:1px solid var(--line);bo
 </header>
 <div id="app"></div>
 </main>
-<script src="questions.js?v=39"></script>
+<script src="questions.js?v=40"></script>
 <!-- Question files are append-only and must stay in this order: progress is stored by question index. Add new files at the end of this list. -->
-<script src="q/spi-doppler.js?v=39"></script>
-<script src="q/spi-transducers.js?v=39"></script>
-<script src="q/spi-waves.js?v=39"></script>
-<script src="q/spi-instrument.js?v=39"></script>
-<script src="q/spi-safety-qa.js?v=39"></script>
-<script src="q/ae-valves.js?v=39"></script>
-<script src="q/ae-cardiomyopathy.js?v=39"></script>
-<script src="q/ae-care-contrast.js?v=39"></script>
-<script src="q/ae-peri-aorta-mass.js?v=39"></script>
-<script src="bank.js?v=39"></script>
-<script src="echo-images.js?v=39"></script>
-<script src="labels.js?v=39"></script>
-<script src="anatomy.js?v=39"></script>
+<script src="q/spi-doppler.js?v=40"></script>
+<script src="q/spi-transducers.js?v=40"></script>
+<script src="q/spi-waves.js?v=40"></script>
+<script src="q/spi-instrument.js?v=40"></script>
+<script src="q/spi-safety-qa.js?v=40"></script>
+<script src="q/ae-valves.js?v=40"></script>
+<script src="q/ae-cardiomyopathy.js?v=40"></script>
+<script src="q/ae-care-contrast.js?v=40"></script>
+<script src="q/ae-peri-aorta-mass.js?v=40"></script>
+<script src="q/ae-chd-ph.js?v=40"></script>
+<script src="bank.js?v=40"></script>
+<script src="echo-images.js?v=40"></script>
+<script src="labels.js?v=40"></script>
+<script src="anatomy.js?v=40"></script>
 <script>
-var APPV=39;
+var APPV=40;
 var T=[];Q.forEach(function(q){if(T.indexOf(q[0])<0)T.push(q[0])});
 var KEY="spi_practice_v1",D={stats:{},flags:{},sessions:[],days:{}};
 try{var L=JSON.parse(localStorage.getItem(KEY));if(L&&L.stats)D=L}catch(e){}
@@ -151,7 +152,7 @@ var BP={spi:{name:"SPI",full:"ARDMS SPI, content outline V24.1",n:110,sec:7200/1
 ["Clinical safety and quality assurance",10,["Quality assurance"]]]},
 ae:{name:"Adult Echo",full:"ARDMS Adult Echocardiography, content outline V24.2",n:150,sec:10800/150,target:2000,doms:[
 ["Anatomy and physiology",15,["Anatomy","Physiology"]],
-["Pathology",40,["Coronary & wall motion","Transplant & devices","Valve disease","Prosthetic valves","Endocarditis","Cardiomyopathy","Pericardial disease","Congenital","Masses","Aorta"]],
+["Pathology",40,["Coronary & wall motion","Transplant & devices","Valve disease","Prosthetic valves","Endocarditis","Cardiomyopathy","Pericardial disease","Congenital","Masses","Aorta","Pulmonary hypertension"]],
 ["Clinical care and safety",11,["Clinical care"]],
 ["Measurements, maneuvers and views",25,["Echo views","Measurements","Stress echo"]],
 ["Instrumentation, optimization and contrast",9,["Echo instrumentation","Contrast"]]]},
@@ -159,7 +160,7 @@ rcs:{name:"CCI RCS",full:"CCI Registered Cardiac Sonographer, matrix for exams f
 ["Preparing for the echo procedure",5,["Clinical care"]],
 ["Performing echo imaging",24,["Echo views","Measurements","Contrast","Stress echo"]],
 ["Evaluating valvular findings",25,["Valve disease","Prosthetic valves","Endocarditis"]],
-["Anatomy, physiology and hemodynamics",29,["Anatomy","Physiology","Hemodynamics","Coronary & wall motion","Transplant & devices","Cardiomyopathy","Pericardial disease","Congenital","Masses","Aorta"]],
+["Anatomy, physiology and hemodynamics",29,["Anatomy","Physiology","Hemodynamics","Coronary & wall motion","Transplant & devices","Cardiomyopathy","Pericardial disease","Congenital","Masses","Aorta","Pulmonary hypertension"]],
 ["Applying ultrasound physics",13,["Waves","Physics","Attenuation","Artifacts","Transducers","Resolution","Instrumentation","Doppler","Safety","Echo instrumentation"]]]}};
 var exLen="Full",exBp="spi",tick=null;
 function domOf(b,t){var d=BP[b].doms;for(var i=0;i<d.length;i++)if(d[i][2].indexOf(t)>=0)return i;return -1}
