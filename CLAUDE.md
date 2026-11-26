@@ -4,15 +4,21 @@ Static web app served by GitHub Pages and installed on the owner's iPhone Home S
 
 ## Every change: bump the version
 The app checks `version.json` when it opens and reloads itself if a newer version exists.
-For any change to index.html, questions.js, echo-images.js, labels.js or anatomy.js:
+For any change to index.html, questions.js, bank.js, echo-images.js, labels.js or anatomy.js:
 1. Increase `v` in `version.json` by 1.
 2. Set `var APPV=` in index.html to the same number.
 3. Set the `?v=` on the script tags in index.html to the same number.
 
 Without this, the owner's phone keeps showing the old version.
 
-## Images
-Echo images live in `img/` and are listed in `echo-images.js` (EIMG array; `IMG` is already used by questions.js for diagrams). Only add de-identified images: crop off names, dates, MRNs.
+## Image library
+Goal: ~100 normal and 300+ abnormal echo images.
+- Data: `bank.js` (EIMG array; `IMG` is already used by questions.js for diagrams). Fields: src, th, view (PLAX, PSAX, A4C, A5C, A2C, A3C, Subcostal, Suprasternal), cat ("normal"/"abnormal"), dx ("Normal" or the confirmed diagnosis), credit (source and permission), title, tag, notes[], qs[].
+- Logic: `echo-images.js` (gallery with filters, detail view, image quiz, plus on-device "My images").
+- Add images with `tools/add_image.py SOURCE echoN --crop TOP BOTTOM LEFT RIGHT`, which writes the full image and a thumbnail and strips EXIF.
+- Only de-identified images: crop off names, dates, MRNs, hospital/college labels.
+- Abnormal images need a confirmed diagnosis from the owner (report or instructor). Do not guess a diagnosis.
+- Abnormal patient images come from a partner hospital in Afghanistan with permission; set credit to that source. Never add course or textbook images.
 
 ## Features
 - Today's 20: mixes due reviews (~60%) with unseen questions.
